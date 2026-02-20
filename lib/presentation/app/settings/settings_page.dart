@@ -11,12 +11,9 @@ class SettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final volume = useState(0.75);
-    final resolution = useState(0.6);
-    final maxFps = useState(0.65);
     final musicOn = useState(true);
     final darkMode = useState(false);
     final vibrationOn = useState(true);
-    final adsOn = useState(true);
 
     return Scaffold(
       backgroundColor: AppColors.settingsBg,
@@ -59,42 +56,7 @@ class SettingsPage extends HookWidget {
                       onChanged: (v) => vibrationOn.value = v,
                     ),
                     const SizedBox(height: AppSpacing.xl),
-                    _ToggleRow(
-                      label: 'Targeted Ads',
-                      value: adsOn.value,
-                      onChanged: (v) => adsOn.value = v,
-                    ),
                     const SizedBox(height: AppSpacing.s18),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const _SectionTitle(title: 'Resolution'),
-                              _SliderRow(
-                                value: resolution.value,
-                                onChanged: (v) => resolution.value = v,
-                              ),
-                              const SizedBox(height: AppSpacing.s18),
-                              const _SectionTitle(title: 'Maximum FPS'),
-                              _SliderRow(
-                                value: maxFps.value,
-                                onChanged: (v) => maxFps.value = v,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.xxl),
-                        const _FpsCard(value: 54),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.s22),
-                    const _SectionTitle(title: 'Language'),
-                    const SizedBox(height: AppSpacing.md),
-                    const _LanguageButton(),
-                    const SizedBox(height: AppSpacing.s28),
                     const _FooterText(),
                   ],
                 ),
@@ -127,7 +89,7 @@ class _HeaderBar extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () => Navigator.of(context).maybePop(),
+            onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               color: AppColors.settingsTitle,
@@ -233,92 +195,7 @@ class _ToggleRow extends StatelessWidget {
   }
 }
 
-class _FpsCard extends StatelessWidget {
-  final int value;
-
-  const _FpsCard({required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.s60 + AppSpacing.s60,
-      height: AppSpacing.s60 + AppSpacing.s40,
-      decoration: BoxDecoration(
-        color: AppColors.settingsCardBg,
-        borderRadius: BorderRadius.circular(AppSpacing.s18),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: AppSpacing.xl,
-            left: AppSpacing.xl,
-            child: Text('$value\nFPS', style: AppTextStyles.settingsFpsText),
-          ),
-          Center(
-            child: Container(
-              width: AppSpacing.s56,
-              height: AppSpacing.s56,
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: AppSpacing.xl,
-            left: AppSpacing.s18,
-            child: Transform.rotate(
-              angle: 0.2,
-              child: const Icon(
-                Icons.change_history,
-                size: AppSpacing.s20,
-                color: AppColors.settingsIcon,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: AppSpacing.lg,
-            right: AppSpacing.s18,
-            child: Transform.rotate(
-              angle: -0.3,
-              child: const Icon(
-                Icons.change_history,
-                size: AppSpacing.s20,
-                color: AppColors.settingsIcon,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LanguageButton extends StatelessWidget {
-  const _LanguageButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.xxl,
-        vertical: AppSpacing.lg,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.settingsThumb,
-        borderRadius: BorderRadius.circular(AppSpacing.xl),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(Icons.language, color: AppColors.white, size: AppSpacing.s20),
-          SizedBox(width: AppSpacing.md),
-          Text('System\nLanguage', style: AppTextStyles.settingsLanguage),
-        ],
-      ),
-    );
-  }
-}
+// Removed resolution, FPS, and language sections per request.
 
 class _FooterText extends StatelessWidget {
   const _FooterText();
