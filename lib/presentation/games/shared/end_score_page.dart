@@ -24,7 +24,7 @@ class EndScorePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xFFF44336),
+      backgroundColor: const Color(0xFFF44336),
       // backgroundColor: Colors.,
       body: SafeArea(
         child: Padding(
