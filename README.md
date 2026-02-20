@@ -3,62 +3,62 @@
 ## Structure
 
 ```
-lib/
-  bootstrap.dart
-  main.dart
-  core/
-    localization/
-      arb/
-        app_en.arb
-        app_es.arb
-        app_hi.arb
-      l10n.dart
-    theme/
-      app_colors.dart
-      app_radius.dart
-      app_spacing.dart
-      app_text_styles.dart
-      app_theme.dart
-  domain/
-    game_engine/
-    games/
-      balance_it/
-      hold_it/
-      stop_it/
-      tapme/
-        score.dart
-        tapme_game.dart
-        tapme_status.dart
-  application/
-    app/
-      initialize_app.dart
-      load_user_profile.dart
-    games/
-      balance_it/
-      hold_it/
-      stop_it/
-      tapme/
-        tapme_bloc.dart
-        tapme_event.dart
-        tapme_state.dart
-  presentation/
-    app/
-      home/
-        home_page.dart
-      loading/
-        loading_page.dart
-      routing/
-        app_router.dart
-    games/
-      balance_it/
-        balance_it_page.dart
-      hold_it/
-        hold_it_page.dart
-      stop_it/
-        stop_it_page.dart
-      tapme/
-        tapme_page.dart
-        widgets/
-          score_text.dart
-          tap_button.dart
+lib
+├── bootstrap.dart
+├── main.dart
+├── core
+│   ├── localization
+│   │   ├── arb
+│   │   │   ├── app_en.arb
+│   │   │   ├── app_es.arb
+│   │   │   └── app_hi.arb
+│   │   └── l10n.dart
+│   └── theme
+│       ├── app_colors.dart
+│       ├── app_radius.dart
+│       ├── app_spacing.dart
+│       ├── app_text_styles.dart
+│       └── app_theme.dart
+├── domain
+│   ├── game_engine
+│   └── games
+│       ├── balance_it
+│       ├── hold_it
+│       ├── stop_it
+│       └── tapme
+│           ├── score.dart
+│           ├── tapme_game.dart
+│           └── tapme_status.dart
+├── application
+│   ├── app
+│   │   ├── initialize_app.dart
+│   │   └── load_user_profile.dart
+│   └── games
+│       ├── balance_it
+│       ├── hold_it
+│       ├── stop_it
+│       └── tapme
+│           ├── tapme_bloc.dart
+│           ├── tapme_event.dart
+│           └── tapme_state.dart
+└── presentation
+    ├── app
+    │   ├── home
+    │   │   └── home_page.dart
+    │   ├── loading
+    │   │   └── loading_page.dart
+    │   └── routing
+    │       └── app_router.dart
+    └── games
+        ├── balance_it
+        │   └── balance_it_page.dart
+        ├── hold_it
+        │   └── hold_it_page.dart
+        ├── stop_it
+        │   └── stop_it_page.dart
+        └── tapme
+            ├── tapme_page.dart
+            └── widgets
+                ├── score_text.dart
+                └── tap_button.dart
 ```
