@@ -11,7 +11,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../shared/end_score_page.dart';
 import 'widgets/hold_button.dart';
-import 'widgets/progress_indicator.dart';
+import 'widgets/jar_fill.dart';
 import 'widgets/score_text.dart';
 
 class HoldItPage extends HookWidget {
@@ -53,7 +53,7 @@ class HoldItPage extends HookWidget {
                       children: [
                         ScoreText(score: state.score.value),
                         const SizedBox(height: AppSpacing.s16),
-                        HoldProgressIndicator(progress: progress),
+                        JarFill(progress: progress),
                         const SizedBox(height: AppSpacing.s32),
                         HoldButton(
                           isHolding: isHolding,
