@@ -16,8 +16,9 @@ class AppTextStyles {
   );
 
   static const TextStyle hintBlink = TextStyle(
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     color: AppColors.hintBlue,
+    fontSize: 16
   );
 
   static const TextStyle tileTitle = TextStyle(

@@ -76,12 +76,12 @@ class LoadingPage extends HookWidget {
                       color: AppColors.primary,
                     ),
                   ),
-                const SizedBox(height: AppSpacing.xl),
+                // const SizedBox(height: AppSpacing.xl),
+                SizedBox(height: height * 0.36),
                 Text(
                   isComplete ? '' : 'Preparing your games...',
                   style: AppTextStyles.bodySecondary,
                 ),
-                SizedBox(height: height * 0.36),
                 if (!isComplete)
                   Center(
                     child: SizedBox(
@@ -119,7 +119,7 @@ class LoadingPage extends HookWidget {
                       ),
                     ),
                   ),
-                const SizedBox(height: AppSpacing.s24),
+                const SizedBox(height: AppSpacing.xl),
                 if (isComplete)
                   AnimatedBuilder(
                     animation: bounceOffset,

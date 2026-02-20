@@ -14,37 +14,37 @@ class HomePage extends StatelessWidget {
       _GameTile(
         title: 'Tap Me!',
         subtitle: 'Fast fingers',
-        route: '/tapme',
-        color: AppColors.black,
+        route: '/game-intro/tapme',
+        color: AppColors.primary,
         textColor: AppColors.white,
-        
       ),
       _GameTile(
         title: 'Stop It!',
         subtitle: 'Perfect timing',
-        route: '/stop-it',
-        color: AppColors.hintBlue,
-        textColor: AppColors.black,
+        route: '/game-intro/stop-it',
+        color: AppColors.accent,
+        textColor: AppColors.white,
       ),
       _GameTile(
         title: 'Hold It!',
         subtitle: "Don't spill",
-        route: '/hold-it',
+        route: '/game-intro/hold-it',
         color: AppColors.tileOrange,
-        textColor: AppColors.lightBlueFill,
+        textColor: AppColors.white,
       ),
       _GameTile(
         title: 'Balance It!',
         subtitle: 'Stay steady',
-        route: '/balance-it',
+        route: '/game-intro/balance-it',
         color: AppColors.tilePurple,
-        textColor: AppColors.endScoreRed,
+        textColor: AppColors.white,
       ),
     ];
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+        backgroundColor: AppColors.lightBlue,
       appBar: AppBar(
+      backgroundColor: AppColors.lightBlueFill,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () => context.go('/settings'),
@@ -53,17 +53,17 @@ class HomePage extends StatelessWidget {
           preferredSize: const Size.fromHeight(1),
           child: Container(
             height: AppSpacing.xs,
-            color: AppColors.primary,
+            color: AppColors.hintBlue,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(AppSpacing.s16),
+        padding: const EdgeInsets.all(AppSpacing.xl),
         child: GridView.count(
           crossAxisCount: 2,
-          crossAxisSpacing: AppSpacing.s16,
-          mainAxisSpacing: AppSpacing.s16,
-          childAspectRatio: 0.8,
+          crossAxisSpacing: AppSpacing.xl,
+          mainAxisSpacing: AppSpacing.xl,
+          childAspectRatio: 0.7,
           children: items,
         ),
       ),
@@ -96,16 +96,9 @@ class _GameTile extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.circular(AppSpacing.s28),
           border: Border.all(
-            color: AppColors.white,
-            width: AppSpacing.sm,
+            color: AppColors.white.withOpacity(0.35),
+            width: AppSpacing.xs,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.35),
-              blurRadius: AppSpacing.s18,
-              offset: const Offset(0, 10),
-            ),
-          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.s16),

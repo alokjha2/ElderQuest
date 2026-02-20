@@ -21,6 +21,11 @@ class AppColors {
 
   static const Color tileOrange = Color(0xFFFF8A65);
   static const Color tilePurple = Color(0xFF7C4DFF);
+  static const Color green = Color(0xFF22C55E);
+  static const Color yellow = Color(0xFFFACC15);
+  static const Color lightWhite = Color(0xFFF9FAFB);
+  static const Color lightBlue = Color(0xFFBFE8FF);
+  static const Color veryLightBlue = Color(0xFFEAF6FF);
 
   static const Color settingsBg = Color(0xFFF8E8DD);
   static const Color settingsBorder = Color(0xFFE2B9A5);
