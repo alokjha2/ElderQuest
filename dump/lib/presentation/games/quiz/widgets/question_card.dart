@@ -31,17 +31,17 @@ class Body extends StatelessWidget {
                   () => Text.rich(
                     TextSpan(
                       text: "Question ${_questionController.questionNumber.value}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: kSecondaryColor),
+                      // style: Theme.of(context)
+                      //     .textTheme
+                      //     .headline4!
+                      //     .copyWith(color: kSecondaryColor),
                       children: [
                         TextSpan(
                           text: "/${_questionController.questions.length}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(color: kSecondaryColor),
+                          // style: Theme.of(context)
+                          //     .textTheme
+                          //     .headline5!
+                          //     .copyWith(color: kSecondaryColor),
                         ),
                       ],
                     ),

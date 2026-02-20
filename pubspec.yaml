@@ -1,82 +1,21 @@
-name: game
-description: A new Flutter project.
+﻿name: elder_quest
 
+publish_to: "none"
 
-publish_to: "none" 
-
-version: 1.0.0+9
+version: 0.1.0+1
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: '>=3.10.0 <4.0.0'
 
 dependencies:
-  # assets_audio_player: 
-  confetti: 
-  cupertino_icons: 
-  flame: 
-  flip_card: 
   flutter:
     sdk: flutter
-  get: 
-  in_app_update:
-  glossy: 
-  lottie: 
-  provider:
-  build_runner: 
-  freezed: 
-  injectable_generator: 
-  hive_generator: 
-  
-  flutter_gemini: 
-  http:
-  # zego_uikit_prebuilt_call:
-  firebase_core: 
-  auto_route_generator: 
-  cloud_firestore: 
-  logger: 
-  # flutter_webrtc: 
-  # flutter_contacts: 
-  permission_handler:
-  # socket_io_client:
-  firebase_database:
-  # firebase_auth: 
-  firebase_messaging: 
-  contacts_service: 
-  nice_buttons: 
-  share_plus: 
-  flutter_hooks: 
-  zoom_widget: ^2.0.1
-  audioplayers:
-  flutter_svg:
-  # updater: ^0.2.4
-  # version_check: ^0.7.1
-  # native_updater: ^0.1.1
-  # package_info_plus: ^8.0.0
-  # version: 
-  # # package_info_plus: 
-  # flutter_autoupdate: ^1.0.0
-  # new_version: 
-  # in_app_update: ^4.2.3
+  cupertino_icons: ^1.0.6
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
-  flutter_launcher_icons: 
-
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/images/logo.png"
-  # min_sdk_android: 21 # android min sdk min:16, default 21
   flutter_test:
     sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
-  # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/.
-    - assets/sounds/.
-    - assets/json/.
-    - assets/icons/.
-    - assets/brain_animation.json
-  #   - images/a_dot_ham.jpeg

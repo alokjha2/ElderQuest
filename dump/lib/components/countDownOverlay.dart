@@ -18,7 +18,7 @@ class CountdownOverlay extends StatelessWidget {
         child: Text(
           timerValue == null ? text! :
           timerValue.toString(),
-          style: theme.headline1!.copyWith(color: Colors.white),
+          // style: theme.headline1!.copyWith(color: Colors.white),
         ),
       ),
     );
