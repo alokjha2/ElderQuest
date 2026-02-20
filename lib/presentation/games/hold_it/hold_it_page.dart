@@ -7,6 +7,8 @@ import '../../../application/games/hold_it/hold_it_event.dart';
 import '../../../application/games/hold_it/hold_it_state.dart';
 import '../../../domain/games/hold_it/hold_it_game.dart';
 import '../../../domain/games/hold_it/hold_it_status.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../shared/end_score_page.dart';
 import 'widgets/hold_button.dart';
 import 'widgets/progress_indicator.dart';
@@ -39,11 +41,11 @@ class HoldItPage extends HookWidget {
           );
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFFF4FAFF),
+          backgroundColor: AppColors.background,
           body: SafeArea(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(AppSpacing.s24),
                 child: BlocBuilder<HoldItBloc, HoldItState>(
                   builder: (context, state) {
                     final progress = state.heldMs / HoldItGame.maxMs;
@@ -53,9 +55,9 @@ class HoldItPage extends HookWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ScoreText(score: state.score.value),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.s16),
                         HoldProgressIndicator(progress: progress),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: AppSpacing.s32),
                         HoldButton(
                           isHolding: isHolding,
                           onPressed: () => context

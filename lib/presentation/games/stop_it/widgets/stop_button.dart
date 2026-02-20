@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_text_styles.dart';
+
 class StopButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
@@ -18,14 +22,16 @@ class StopButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 42, vertical: 18),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        foregroundColor: AppColors.white,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s40,
+          vertical: AppSpacing.s18,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.s20),
+        ),
       ),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-      ),
+      child: Text(label, style: AppTextStyles.buttonLabel),
     );
   }
 }

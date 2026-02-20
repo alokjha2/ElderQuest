@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class LoadingPage extends HookWidget {
   const LoadingPage({super.key});
@@ -46,7 +51,7 @@ class LoadingPage extends HookWidget {
     final blinkOpacity = Tween<double>(begin: 0.3, end: 1.0).animate(blink);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4FAFF),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           controller: controller,
@@ -54,59 +59,57 @@ class LoadingPage extends HookWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: height),
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(AppSpacing.s24),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: height * 0.2),
-                  const Text(
+                  Text(
                     'ElderQuest',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0A2C46),
+                    style: GoogleFonts.fuzzyBubbles(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
                       letterSpacing: 1.1,
                     ),
                   ),
-                  // const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.xl),
                   
                   SizedBox(height: height * 0.45),
-                  Text(
-                    isComplete ? '' : 'Preparing your games...',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF2E4B63),
-                    ),
-                  ),
                   if (!isComplete)
-                    Center(
-                      child: SizedBox(
-                        width: 240,
-                        // height: 30,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: LinearProgressIndicator(
-                                minHeight: 12,
-                                value: progress,
-                                backgroundColor: const Color(0xFFDCEFFF),
-                                valueColor: const AlwaysStoppedAnimation(
-                                  Color(0xFF2E7BFF),
+                    Column(
+                      children: [
+                        Text(
+                    isComplete ? '' : 'Preparing your games...',
+                    style: AppTextStyles.bodySecondary,
+                  ),
+                        Center(
+                          child: SizedBox(
+                            width: 240,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(AppSpacing.xl),
+                                  child: LinearProgressIndicator(
+                                    minHeight: AppSpacing.xl,
+                                    value: progress,
+                                    backgroundColor: AppColors.lightBlueFill,
+                                    valueColor: const AlwaysStoppedAnimation(
+                                      AppColors.primary,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  '${value.value}%',
+                                  style: AppTextStyles.titleMedium,
+                                ),
+                              ],
                             ),
-                            Text(
-                              '${value.value}%',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF0A2C46),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   if (isComplete)
                     FadeTransition(
@@ -114,14 +117,11 @@ class LoadingPage extends HookWidget {
                       child: const Center(
                         child: Text(
                           'Scroll page to play',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF6CA9FF),
-                          ),
+                          style: AppTextStyles.hintBlink,
                         ),
                       ),
                     ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: AppSpacing.s48),
                 ],
               ),
             ),

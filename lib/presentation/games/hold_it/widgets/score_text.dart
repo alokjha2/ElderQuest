@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_text_styles.dart';
+
 class ScoreText extends StatelessWidget {
   final int score;
 
@@ -7,9 +9,6 @@ class ScoreText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Score: $score',
-      style: Theme.of(context).textTheme.titleLarge,
-    );
+    return Text('Score: $score', style: AppTextStyles.scoreText);
   }
 }

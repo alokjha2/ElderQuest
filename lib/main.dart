@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/theme/app_theme.dart';
 import 'presentation/app/routing/app_router.dart';
 
 void main() {
@@ -16,10 +17,7 @@ class ElderQuestApp extends StatelessWidget {
 
     return MaterialApp.router(
       title: 'ElderQuest',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.light(),
       debugShowCheckedModeBanner: false,
       routerConfig: router,
     );

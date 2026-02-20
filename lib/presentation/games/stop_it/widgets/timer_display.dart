@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_text_styles.dart';
+
 class TimerDisplay extends StatelessWidget {
   final int elapsedHundredths;
   final int targetHundredths;
@@ -22,19 +25,11 @@ class TimerDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          _format(elapsedHundredths),
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF0A2C46),
-              ),
-        ),
-        const SizedBox(height: 6),
+        Text(_format(elapsedHundredths), style: AppTextStyles.timerValue),
+        const SizedBox(height: AppSpacing.sm),
         Text(
           'Target ${_format(targetHundredths)}',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: const Color(0xFF2E4B63),
-              ),
+          style: AppTextStyles.timerTarget,
         ),
       ],
     );

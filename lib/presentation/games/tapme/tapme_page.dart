@@ -5,7 +5,10 @@ import 'package:elder_quest/domain/games/tapme/tapme_status.dart';
 import 'package:elder_quest/presentation/games/shared/end_score_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class TapMePage extends StatelessWidget {
   const TapMePage({super.key});
@@ -25,6 +28,7 @@ class _TapMeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: BlocListener<TapMeBloc, TapMeState>(
         listenWhen: (prev, curr) =>
             prev.game.status != curr.game.status,
@@ -50,7 +54,7 @@ class _TapMeView extends StatelessWidget {
                 return ElevatedButton(
                   onPressed: () =>
                       context.read<TapMeBloc>().add(TapMeStarted()),
-                  child: const Text("Start"),
+                  child: const Text('Start', style: AppTextStyles.buttonLabel),
                 );
               }
 
@@ -59,18 +63,18 @@ class _TapMeView extends StatelessWidget {
                 children: [
                   Text(
                     "Time: ${game.remainingTime}",
-                    style: const TextStyle(fontSize: 28),
+                    style: AppTextStyles.scoreText,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: AppSpacing.s20),
                   Text(
                     "Score: ${game.score.value}",
-                    style: const TextStyle(fontSize: 32),
+                    style: AppTextStyles.scoreText,
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: AppSpacing.s40),
                   ElevatedButton(
                     onPressed: () =>
                         context.read<TapMeBloc>().add(TapMeTapped()),
-                    child: const Text("TAP!"),
+                    child: const Text('TAP!', style: AppTextStyles.buttonLabel),
                   ),
                 ],
               );

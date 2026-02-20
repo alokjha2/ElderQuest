@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
+
 class EndScorePage extends HookWidget {
   final String modeTitle;
   final int score;
@@ -19,16 +23,16 @@ class EndScorePage extends HookWidget {
     this.onAgain,
   });
 
-
-// worked colors - red, blue, green, purple, pink, deepPurple, orange, tealAccent
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF44336),
-      // backgroundColor: Colors.,
+      backgroundColor: AppColors.endScoreRed,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.s28,
+            vertical: AppSpacing.s16,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -36,78 +40,38 @@ class EndScorePage extends HookWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Piano Tiles (Don\'t tap the white tile)',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      "Piano Tiles (Don't tap the white tile)",
+                      style: AppTextStyles.endScoreHeader,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '1795',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(Icons.music_note, color: Colors.white, size: 18),
+                  const SizedBox(width: AppSpacing.md),
+                  Text('1795', style: AppTextStyles.endScoreHeaderValue),
+                  const SizedBox(width: AppSpacing.xs),
+                  const Icon(Icons.music_note,
+                      color: AppColors.white, size: AppSpacing.s18),
                 ],
               ),
-              const SizedBox(height: 36),
-              Text(
-                '5 x 5',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                modeTitle,
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                '$score',
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 88,
-                    ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                bestLabel,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.2,
-                    ),
-              ),
+              const SizedBox(height: AppSpacing.s36),
+              Text('5 x 5', style: AppTextStyles.endScoreModeMeta),
+              const SizedBox(height: AppSpacing.md),
+              Text(modeTitle, style: AppTextStyles.endScoreModeTitle),
+              const SizedBox(height: AppSpacing.s32),
+              Text('$score', style: AppTextStyles.endScoreValue),
+              const SizedBox(height: AppSpacing.s32),
+              Text(bestLabel, style: AppTextStyles.endScoreBest),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _ActionText(
-                    label: 'Share',
-                    onTap: onShare,
-                  ),
+                  _ActionText(label: 'Share', onTap: onShare),
                   _ActionText(
                     label: 'Exit',
                     onTap: onExit ?? () => Navigator.of(context).maybePop(),
                   ),
-                  _ActionText(
-                    label: 'Again',
-                    onTap: onAgain,
-                  ),
+                  _ActionText(label: 'Again', onTap: onAgain),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.md),
             ],
           ),
         ),
@@ -128,14 +92,11 @@ class _ActionText extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.md,
         ),
+        child: Text(label, style: AppTextStyles.endScoreAction),
       ),
     );
   }

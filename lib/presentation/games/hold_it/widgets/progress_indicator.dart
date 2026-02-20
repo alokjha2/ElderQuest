@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+
 class HoldProgressIndicator extends StatelessWidget {
   final double progress;
 
@@ -8,12 +11,12 @@ class HoldProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppSpacing.xl),
       child: LinearProgressIndicator(
-        minHeight: 12,
+        minHeight: AppSpacing.xl,
         value: progress.clamp(0.0, 1.0),
-        backgroundColor: const Color(0xFFDCEFFF),
-        valueColor: const AlwaysStoppedAnimation(Color(0xFF2E7BFF)),
+        backgroundColor: AppColors.lightBlueFill,
+        valueColor: const AlwaysStoppedAnimation(AppColors.primary),
       ),
     );
   }

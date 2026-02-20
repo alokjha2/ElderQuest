@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_text_styles.dart';
+
 class TapButton extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -10,10 +14,17 @@ class TapButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s40,
+          vertical: AppSpacing.s20,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.s20),
+        ),
       ),
-      child: const Text('Tap'),
+      child: const Text('Tap', style: AppTextStyles.buttonLabel),
     );
   }
 }

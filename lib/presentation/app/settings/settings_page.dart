@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
+
 class SettingsPage extends HookWidget {
   const SettingsPage({super.key});
 
@@ -15,47 +19,52 @@ class SettingsPage extends HookWidget {
     final adsOn = useState(true);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8E8DD),
+      backgroundColor: AppColors.settingsBg,
       body: SafeArea(
         child: Column(
           children: [
             const _HeaderBar(),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.s20,
+                  AppSpacing.s18,
+                  AppSpacing.s20,
+                  AppSpacing.s24,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _SectionTitle(title: 'Volume'),
+                    const _SectionTitle(title: 'Volume'),
                     _SliderRow(
                       value: volume.value,
                       onChanged: (v) => volume.value = v,
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: AppSpacing.s18),
                     _ToggleRow(
                       label: 'Music',
                       value: musicOn.value,
                       onChanged: (v) => musicOn.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.xl),
                     _ToggleRow(
                       label: 'Dark Mode',
                       value: darkMode.value,
                       onChanged: (v) => darkMode.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.xl),
                     _ToggleRow(
                       label: 'Vibration',
                       value: vibrationOn.value,
                       onChanged: (v) => vibrationOn.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.xl),
                     _ToggleRow(
                       label: 'Targeted Ads',
                       value: adsOn.value,
                       onChanged: (v) => adsOn.value = v,
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: AppSpacing.s18),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -63,13 +72,13 @@ class SettingsPage extends HookWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _SectionTitle(title: 'Resolution'),
+                              const _SectionTitle(title: 'Resolution'),
                               _SliderRow(
                                 value: resolution.value,
                                 onChanged: (v) => resolution.value = v,
                               ),
-                              const SizedBox(height: 18),
-                              _SectionTitle(title: 'Maximum FPS'),
+                              const SizedBox(height: AppSpacing.s18),
+                              const _SectionTitle(title: 'Maximum FPS'),
                               _SliderRow(
                                 value: maxFps.value,
                                 onChanged: (v) => maxFps.value = v,
@@ -77,15 +86,15 @@ class SettingsPage extends HookWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 14),
-                        _FpsCard(value: 54),
+                        const SizedBox(width: AppSpacing.xxl),
+                        const _FpsCard(value: 54),
                       ],
                     ),
-                    const SizedBox(height: 22),
-                    _SectionTitle(title: 'Language'),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.s22),
+                    const _SectionTitle(title: 'Language'),
+                    const SizedBox(height: AppSpacing.md),
                     const _LanguageButton(),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: AppSpacing.s28),
                     const _FooterText(),
                   ],
                 ),
@@ -104,33 +113,32 @@ class _HeaderBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.xl,
+        AppSpacing.md,
+        AppSpacing.xl,
+        AppSpacing.lg,
+      ),
       decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Color(0xFFE2B9A5), width: 2),
+          bottom: BorderSide(color: AppColors.settingsBorder, width: 2),
         ),
       ),
       child: Row(
         children: [
           IconButton(
             onPressed: () => Navigator.of(context).maybePop(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                color: Color(0xFFD17C6E)),
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.settingsTitle,
+            ),
           ),
           const Expanded(
             child: Center(
-              child: Text(
-                'SETTINGS',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20,
-                  letterSpacing: 1.2,
-                  color: Color(0xFFD17C6E),
-                ),
-              ),
+              child: Text('SETTINGS', style: AppTextStyles.settingsTitle),
             ),
           ),
-          const SizedBox(width: 40),
+          const SizedBox(width: AppSpacing.s40),
         ],
       ),
     );
@@ -144,14 +152,7 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
-        color: Color(0xFF4A4A4A),
-      ),
-    );
+    return Text(title, style: AppTextStyles.settingsSection);
   }
 }
 
@@ -165,11 +166,11 @@ class _SliderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        trackHeight: 8,
-        activeTrackColor: const Color(0xFFB86E8E),
-        inactiveTrackColor: const Color(0xFFE8C9D6),
-        thumbColor: const Color(0xFF9C5AA7),
-        overlayColor: const Color(0x339C5AA7),
+        trackHeight: AppSpacing.md,
+        activeTrackColor: AppColors.settingsTrackActive,
+        inactiveTrackColor: AppColors.settingsTrackInactive,
+        thumbColor: AppColors.settingsThumb,
+        overlayColor: AppColors.settingsThumb.withOpacity(0.2),
       ),
       child: Slider(
         value: value,
@@ -194,38 +195,35 @@ class _ToggleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF4A4A4A),
-            ),
-          ),
-        ),
+        Expanded(child: Text(label, style: AppTextStyles.settingsSection)),
         GestureDetector(
           onTap: () => onChanged(!value),
           child: Container(
-            width: 58,
-            height: 30,
-            padding: const EdgeInsets.all(4),
+            width: AppSpacing.s58,
+            height: AppSpacing.s32,
+            padding: const EdgeInsets.all(AppSpacing.xs),
             decoration: BoxDecoration(
-              color: value ? const Color(0xFFD9B1D0) : const Color(0xFFD7D7D7),
-              borderRadius: BorderRadius.circular(18),
+              color: value
+                  ? AppColors.settingsToggleOnBg
+                  : AppColors.settingsToggleOffBg,
+              borderRadius: BorderRadius.circular(AppSpacing.s18),
             ),
             child: Align(
               alignment: value ? Alignment.centerRight : Alignment.centerLeft,
               child: Container(
-                width: 22,
-                height: 22,
+                width: AppSpacing.s22,
+                height: AppSpacing.s22,
                 decoration: BoxDecoration(
-                  color: value ? const Color(0xFF9C5AA7) : const Color(0xFF6A6A6A),
+                  color: value
+                      ? AppColors.settingsThumb
+                      : AppColors.settingsThumbDark,
                   shape: BoxShape.circle,
                 ),
                 child: value
-                    ? const Icon(Icons.check, size: 14, color: Colors.white)
-                    : const Icon(Icons.close, size: 14, color: Colors.white),
+                    ? const Icon(Icons.check,
+                        size: AppSpacing.xl, color: AppColors.white)
+                    : const Icon(Icons.close,
+                        size: AppSpacing.xl, color: AppColors.white),
               ),
             ),
           ),
@@ -243,50 +241,51 @@ class _FpsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 140,
+      width: AppSpacing.s60 + AppSpacing.s60,
+      height: AppSpacing.s60 + AppSpacing.s40,
       decoration: BoxDecoration(
-        color: const Color(0xFFE7BDA8),
-        borderRadius: BorderRadius.circular(18),
+        color: AppColors.settingsCardBg,
+        borderRadius: BorderRadius.circular(AppSpacing.s18),
       ),
       child: Stack(
         children: [
           Positioned(
-            top: 12,
-            left: 12,
-            child: Text(
-              '$value\nFPS',
-              style: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-                color: Color(0xFFB76D53),
-              ),
-            ),
+            top: AppSpacing.xl,
+            left: AppSpacing.xl,
+            child: Text('$value\nFPS', style: AppTextStyles.settingsFpsText),
           ),
           Center(
             child: Container(
-              width: 56,
-              height: 56,
+              width: AppSpacing.s56,
+              height: AppSpacing.s56,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 shape: BoxShape.circle,
               ),
             ),
           ),
           Positioned(
-            bottom: 12,
-            left: 18,
+            bottom: AppSpacing.xl,
+            left: AppSpacing.s18,
             child: Transform.rotate(
               angle: 0.2,
-              child: const Icon(Icons.change_history, size: 20, color: Color(0xFF5A3D33)),
+              child: const Icon(
+                Icons.change_history,
+                size: AppSpacing.s20,
+                color: AppColors.settingsIcon,
+              ),
             ),
           ),
           Positioned(
-            bottom: 10,
-            right: 18,
+            bottom: AppSpacing.lg,
+            right: AppSpacing.s18,
             child: Transform.rotate(
               angle: -0.3,
-              child: const Icon(Icons.change_history, size: 20, color: Color(0xFF5A3D33)),
+              child: const Icon(
+                Icons.change_history,
+                size: AppSpacing.s20,
+                color: AppColors.settingsIcon,
+              ),
             ),
           ),
         ],
@@ -301,23 +300,20 @@ class _LanguageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.xxl,
+        vertical: AppSpacing.lg,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFF9C5AA7),
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.settingsThumb,
+        borderRadius: BorderRadius.circular(AppSpacing.xl),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          Icon(Icons.language, color: Colors.white, size: 20),
-          SizedBox(width: 8),
-          Text(
-            'System\nLanguage',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          Icon(Icons.language, color: AppColors.white, size: AppSpacing.s20),
+          SizedBox(width: AppSpacing.md),
+          Text('System\nLanguage', style: AppTextStyles.settingsLanguage),
         ],
       ),
     );
@@ -332,17 +328,10 @@ class _FooterText extends StatelessWidget {
     return Center(
       child: RichText(
         text: const TextSpan(
-          style: TextStyle(
-            fontSize: 14,
-            color: Color(0xFF8C6F61),
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTextStyles.settingsFooter,
           children: [
             TextSpan(text: 'Our '),
-            TextSpan(
-              text: 'Terms and Privacy Policy.',
-              style: TextStyle(color: Color(0xFF9C5AA7)),
-            ),
+            TextSpan(text: 'Terms and Privacy Policy.', style: AppTextStyles.settingsFooterLink),
           ],
         ),
       ),

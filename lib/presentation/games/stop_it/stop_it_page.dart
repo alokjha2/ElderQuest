@@ -7,6 +7,8 @@ import '../../../application/games/stop_it/stop_it_event.dart';
 import '../../../application/games/stop_it/stop_it_state.dart';
 import '../../../domain/games/stop_it/stop_it_game.dart';
 import '../../../domain/games/stop_it/stop_it_status.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../shared/end_score_page.dart';
 import 'widgets/stop_button.dart';
 import 'widgets/timer_display.dart';
@@ -37,11 +39,11 @@ class StopItPage extends HookWidget {
           );
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFFF4FAFF),
+          backgroundColor: AppColors.background,
           body: SafeArea(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(AppSpacing.s24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -53,15 +55,15 @@ class StopItPage extends HookWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: AppSpacing.s32),
                     BlocBuilder<StopItBloc, StopItState>(
                       builder: (context, state) {
                         final isRunning = state.status == StopItStatus.running;
                         return StopButton(
                           label: isRunning ? 'STOP' : 'START',
                           color: isRunning
-                              ? const Color(0xFFE53935)
-                              : const Color(0xFF2E7BFF),
+                              ? AppColors.danger
+                              : AppColors.primary,
                           onPressed: () {
                             if (isRunning) {
                               context.read<StopItBloc>().add(const StopItStopped());
