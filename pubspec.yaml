@@ -23,3 +23,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Idiqlat
+      fonts:
+        - asset: assets/fonts/Idiqlat-2.000/Idiqlat-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Idiqlat-2.000/Idiqlat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Idiqlat-2.000/Idiqlat-Regular.ttf
+          weight: 400

@@ -15,25 +15,30 @@ class HomePage extends StatelessWidget {
         title: 'Tap Me!',
         subtitle: 'Fast fingers',
         route: '/tapme',
-        color: AppColors.primary,
+        color: AppColors.black,
+        textColor: AppColors.white,
+        
       ),
       _GameTile(
         title: 'Stop It!',
         subtitle: 'Perfect timing',
         route: '/stop-it',
-        color: AppColors.accent,
+        color: AppColors.hintBlue,
+        textColor: AppColors.black,
       ),
       _GameTile(
         title: 'Hold It!',
         subtitle: "Don't spill",
         route: '/hold-it',
         color: AppColors.tileOrange,
+        textColor: AppColors.lightBlueFill,
       ),
       _GameTile(
         title: 'Balance It!',
         subtitle: 'Stay steady',
         route: '/balance-it',
         color: AppColors.tilePurple,
+        textColor: AppColors.endScoreRed,
       ),
     ];
 
@@ -71,12 +76,14 @@ class _GameTile extends StatelessWidget {
   final String subtitle;
   final String route;
   final Color color;
+  final Color textColor;
 
   const _GameTile({
     required this.title,
     required this.subtitle,
     required this.route,
     required this.color,
+    required this.textColor,
   });
 
   @override
@@ -105,9 +112,26 @@ class _GameTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: AppTextStyles.tileTitle),
-              const SizedBox(height: AppSpacing.sm),
-              Text(subtitle, style: AppTextStyles.tileSubtitle),
+              IntrinsicWidth(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.tileTitle.copyWith(color: textColor),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Container(
+                      height: AppSpacing.xs,
+                      decoration: BoxDecoration(
+                      color: textColor,
+                        borderRadius: BorderRadius.circular(AppSpacing.s18)),
+                    ),
+                  ],
+                ),
+              ),
+              // const SizedBox(height: AppSpacing.sm),
+              // Text(subtitle, style: AppTextStyles.tileSubtitle),
             ],
           ),
         ),

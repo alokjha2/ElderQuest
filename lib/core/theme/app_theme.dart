@@ -10,6 +10,7 @@ class AppTheme {
     final base = ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       useMaterial3: true,
+      fontFamily: 'Idiqlat',
     );
 
     return base.copyWith(
