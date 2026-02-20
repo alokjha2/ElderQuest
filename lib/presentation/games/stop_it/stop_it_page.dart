@@ -28,12 +28,9 @@ class StopItPage extends HookWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => EndScorePage(
-                modeTitle: 'Stop It!',
+                gameTitle: 'Stop It!',
                 score: state.score.value,
-                onAgain: () {
-                  Navigator.of(context).pop();
-                  context.read<StopItBloc>().add(const StopItReset());
-                },
+                playRoute: '/stop-it',
               ),
             ),
           );

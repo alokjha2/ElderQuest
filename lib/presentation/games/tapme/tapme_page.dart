@@ -30,55 +30,62 @@ class _TapMeView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: BlocListener<TapMeBloc, TapMeState>(
-        listenWhen: (prev, curr) =>
-            prev.game.status != curr.game.status,
+        listenWhen: (prev, curr) => prev.game.status != curr.game.status,
         listener: (context, state) {
           if (state.game.status == TapMeStatus.finished) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (_) => EndScorePage(
+                  gameTitle: 'Tap Me!',
                   score: state.game.score.value,
-                  modeTitle: 'Tap Me',
+                  playRoute: '/tapme',
                 ),
               ),
             );
           }
         },
-        child: Center(
-          child: BlocBuilder<TapMeBloc, TapMeState>(
-            builder: (context, state) {
-              final game = state.game;
-
-              if (game.status == TapMeStatus.initial) {
-                return ElevatedButton(
-                  onPressed: () =>
-                      context.read<TapMeBloc>().add(TapMeStarted()),
-                  child: const Text('Start', style: AppTextStyles.buttonLabel),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            final bloc = context.read<TapMeBloc>();
+            final status = bloc.state.game.status;
+            if (status == TapMeStatus.initial) {
+              bloc.add(TapMeStarted());
+              bloc.add(TapMeTapped());
+              return;
+            }
+            if (status == TapMeStatus.playing) {
+              bloc.add(TapMeTapped());
+            }
+          },
+          child: Center(
+            child: BlocBuilder<TapMeBloc, TapMeState>(
+              builder: (context, state) {
+                final game = state.game;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Time: ${game.remainingTime}",
+                      style: AppTextStyles.scoreText,
+                    ),
+                    const SizedBox(height: AppSpacing.s20),
+                    Text(
+                      "Score: ${game.score.value}",
+                      style: AppTextStyles.scoreText,
+                    ),
+                    const SizedBox(height: AppSpacing.s40),
+                    Text(
+                      game.status == TapMeStatus.initial
+                          ? 'Tap anywhere to start'
+                          : 'Tap anywhere',
+                      style: AppTextStyles.bodySecondary,
+                    ),
+                  ],
                 );
-              }
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Time: ${game.remainingTime}",
-                    style: AppTextStyles.scoreText,
-                  ),
-                  const SizedBox(height: AppSpacing.s20),
-                  Text(
-                    "Score: ${game.score.value}",
-                    style: AppTextStyles.scoreText,
-                  ),
-                  const SizedBox(height: AppSpacing.s40),
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<TapMeBloc>().add(TapMeTapped()),
-                    child: const Text('TAP!', style: AppTextStyles.buttonLabel),
-                  ),
-                ],
-              );
-            },
+              },
+            ),
           ),
         ),
       ),

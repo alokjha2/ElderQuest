@@ -30,12 +30,9 @@ class HoldItPage extends HookWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => EndScorePage(
-                modeTitle: 'Hold It!',
+                gameTitle: 'Hold It!',
                 score: state.score.value,
-                onAgain: () {
-                  Navigator.of(context).pop();
-                  context.read<HoldItBloc>().add(const ResetHoldEvent());
-                },
+                playRoute: '/hold-it',
               ),
             ),
           );
