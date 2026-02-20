@@ -9,8 +9,8 @@ import '../../../domain/games/hold_it/hold_it_game.dart';
 import '../../../domain/games/hold_it/hold_it_status.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../shared/end_score_page.dart';
-import 'widgets/hold_button.dart';
 import 'widgets/jar_fill.dart';
 import 'widgets/score_text.dart';
 
@@ -38,37 +38,48 @@ class HoldItPage extends HookWidget {
           );
         },
         child: Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: const Color(0xFF1F3A2A),
           body: SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.s24),
-                child: BlocBuilder<HoldItBloc, HoldItState>(
-                  builder: (context, state) {
-                    final progress = state.heldMs / HoldItGame.maxMs;
-                    final isHolding = state.status == HoldItStatus.holding;
+            child: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTapDown: (_) =>
+                      context.read<HoldItBloc>().add(const StartHoldEvent()),
+                  onTapUp: (_) =>
+                      context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+                  onTapCancel: () =>
+                      context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.s24),
+                      child: BlocBuilder<HoldItBloc, HoldItState>(
+                        builder: (context, state) {
+                          final progress = state.heldMs / HoldItGame.maxMs;
 
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ScoreText(score: state.score.value),
-                        const SizedBox(height: AppSpacing.s16),
-                        JarFill(progress: progress),
-                        const SizedBox(height: AppSpacing.s32),
-                        HoldButton(
-                          isHolding: isHolding,
-                          onPressed: () => context
-                              .read<HoldItBloc>()
-                              .add(const StartHoldEvent()),
-                          onReleased: () => context
-                              .read<HoldItBloc>()
-                              .add(const ReleaseHoldEvent()),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ScoreText(score: state.score.value),
+                              const SizedBox(height: AppSpacing.s16),
+                              JarFill(progress: progress),
+                              const SizedBox(height: AppSpacing.s32),
+                              Text(
+                                state.status == HoldItStatus.holding
+                                    ? 'Release to stop'
+                                    : 'Press anywhere to fill',
+                                style: AppTextStyles.bodySecondary.copyWith(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),

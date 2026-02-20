@@ -1,17 +1,16 @@
+import 'package:elder_quest/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../application/games/stop_it/stop_it_bloc.dart';
 import '../../../application/games/stop_it/stop_it_event.dart';
 import '../../../application/games/stop_it/stop_it_state.dart';
-import '../../../domain/games/stop_it/stop_it_game.dart';
 import '../../../domain/games/stop_it/stop_it_status.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../shared/end_score_page.dart';
-import 'widgets/stop_button.dart';
-import 'widgets/timer_display.dart';
 
 class StopItPage extends HookWidget {
   const StopItPage({super.key});
@@ -36,44 +35,73 @@ class StopItPage extends HookWidget {
           );
         },
         child: Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: AppColors.lightPurple,
           body: SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.s24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BlocBuilder<StopItBloc, StopItState>(
-                      builder: (context, state) {
-                        return TimerDisplay(
-                          elapsedHundredths: state.elapsedHundredths,
-                          targetHundredths: StopItGame.targetHundredths,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.s32),
-                    BlocBuilder<StopItBloc, StopItState>(
-                      builder: (context, state) {
-                        final isRunning = state.status == StopItStatus.running;
-                        return StopButton(
-                          label: isRunning ? 'STOP' : 'START',
-                          color: isRunning
-                              ? AppColors.danger
-                              : AppColors.primary,
-                          onPressed: () {
-                            if (isRunning) {
-                              context.read<StopItBloc>().add(const StopItStopped());
-                            } else {
-                              context.read<StopItBloc>().add(const StopItStarted());
-                            }
+            child: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    final bloc = context.read<StopItBloc>();
+                    if (bloc.state.status == StopItStatus.running) {
+                      bloc.add(const StopItStopped());
+                    } else if (bloc.state.status == StopItStatus.idle) {
+                      bloc.add(const StopItStarted());
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.s24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () => context.go('/home'),
+                              icon: const Icon(Icons.arrow_back_rounded),
+                            ),
+                            const SizedBox(width: AppSpacing.sm),
+                            const Text('Stop It!',
+                                style: AppTextStyles.titleMedium),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.s24),
+                        BlocBuilder<StopItBloc, StopItState>(
+                          builder: (context, state) {
+                            final targetSeconds = (state.targetHundredths / 100)
+                                .toStringAsFixed(0);
+                            final currentSeconds = (state.elapsedHundredths / 100)
+                                .toStringAsFixed(2);
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Target: $targetSeconds s',
+                                    style: AppTextStyles.scoreText),
+                                const SizedBox(height: AppSpacing.s16),
+                                Text('Time: $currentSeconds s',
+                                    style: AppTextStyles.scoreText),
+                              ],
+                            );
                           },
-                        );
-                      },
+                        ),
+                        const Spacer(),
+                        Center(
+                          child: BlocBuilder<StopItBloc, StopItState>(
+                            builder: (context, state) {
+                              final text = state.status == StopItStatus.running
+                                  ? 'Press anywhere to stop'
+                                  : 'Press anywhere to start';
+                              return Text(text,
+                                  style: AppTextStyles.bodySecondary);
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.s24),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),

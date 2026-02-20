@@ -26,6 +26,7 @@ class AppColors {
   static const Color lightWhite = Color(0xFFF9FAFB);
   static const Color lightBlue = Color(0xFFBFE8FF);
   static const Color veryLightBlue = Color(0xFFEAF6FF);
+  static const Color lightPurple = Color(0xFFEDE4FF);
 
   static const Color settingsBg = Color(0xFFF8E8DD);
   static const Color settingsBorder = Color(0xFFE2B9A5);

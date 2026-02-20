@@ -2,15 +2,15 @@ import 'score.dart';
 import 'stop_it_status.dart';
 
 class StopItGame {
-  static const int targetHundredths = 1000; // 10.00s
-
   final StopItStatus status;
   final int elapsedHundredths;
+  final int targetHundredths;
   final Score score;
 
   const StopItGame({
     required this.status,
     required this.elapsedHundredths,
+    required this.targetHundredths,
     required this.score,
   });
 
@@ -18,6 +18,7 @@ class StopItGame {
     return const StopItGame(
       status: StopItStatus.idle,
       elapsedHundredths: 0,
+      targetHundredths: 1000,
       score: Score(0),
     );
   }
@@ -25,11 +26,13 @@ class StopItGame {
   StopItGame copyWith({
     StopItStatus? status,
     int? elapsedHundredths,
+    int? targetHundredths,
     Score? score,
   }) {
     return StopItGame(
       status: status ?? this.status,
       elapsedHundredths: elapsedHundredths ?? this.elapsedHundredths,
+      targetHundredths: targetHundredths ?? this.targetHundredths,
       score: score ?? this.score,
     );
   }

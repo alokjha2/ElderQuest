@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,9 +24,13 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
 
   void _onStarted(StopItStarted event, Emitter<StopItState> emit) {
     _timer?.cancel();
+    final options = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
+    final targetSeconds = options[Random().nextInt(options.length)];
+    final targetHundredths = targetSeconds * 100;
     emit(state.copyWith(
       status: StopItStatus.running,
       elapsedHundredths: 0,
+      targetHundredths: targetHundredths,
       score: const Score(0),
     ));
     _timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
@@ -41,7 +46,12 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
   void _onStopped(StopItStopped event, Emitter<StopItState> emit) {
     if (state.status != StopItStatus.running) return;
     _timer?.cancel();
-    final score = game.evaluateScore(state.elapsedHundredths);
+    final score = StopItGame(
+      status: state.status,
+      elapsedHundredths: state.elapsedHundredths,
+      targetHundredths: state.targetHundredths,
+      score: state.score,
+    ).evaluateScore(state.elapsedHundredths);
     emit(state.copyWith(
       status: StopItStatus.finished,
       score: score,
