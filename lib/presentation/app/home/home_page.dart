@@ -34,12 +34,12 @@ class HomePage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: const Color(0xFFF4FAFF),
       appBar: AppBar(bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1),
       child: Container(
         height: 4,
-        color: Colors.lightBlue, // your custom color
+        color: const Color(0xFF2E7BFF), // your custom color
       ),
     ),),
       body: Padding(
@@ -79,7 +79,7 @@ class _GameTile extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.circular(26),
            border: Border.all(
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white,
             width: 6, 
           ),
           boxShadow: [
