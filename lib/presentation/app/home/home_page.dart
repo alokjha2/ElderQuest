@@ -34,13 +34,21 @@ class HomePage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Game Hub')),
+      backgroundColor: Colors.lightBlue[100],
+      appBar: AppBar(bottom: PreferredSize(
+      preferredSize: const Size.fromHeight(1),
+      child: Container(
+        height: 4,
+        color: Colors.lightBlue, // your custom color
+      ),
+    ),),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
+          childAspectRatio: .8,
           children: items,
         ),
       ),
@@ -69,7 +77,11 @@ class _GameTile extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(26),
+           border: Border.all(
+            color: Colors.white.withOpacity(0.8),
+            width: 6, 
+          ),
           boxShadow: [
             BoxShadow(
               color: color.withOpacity(0.35),
