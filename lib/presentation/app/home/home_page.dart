@@ -34,8 +34,14 @@ class HomePage extends StatelessWidget {
     ];
 
     return Scaffold(
+      
       backgroundColor: const Color(0xFFF4FAFF),
-      appBar: AppBar(bottom: PreferredSize(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => context.go('/settings'),
+        ),
+        bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1),
       child: Container(
         height: 4,

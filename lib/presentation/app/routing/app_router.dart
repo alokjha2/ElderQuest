@@ -6,6 +6,7 @@ import '../../games/stop_it/stop_it_page.dart';
 import '../../games/tapme/tapme_page.dart';
 import '../home/home_page.dart';
 import '../loading/loading_page.dart';
+import '../settings/settings_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -18,6 +19,10 @@ class AppRouter {
       GoRoute(
         path: '/home',
         builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
         path: '/tapme',
