@@ -19,10 +19,13 @@ class EndScorePage extends HookWidget {
     this.onAgain,
   });
 
+
+// worked colors - red, blue, green, purple, pink, deepPurple, orange, tealAccent
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF44336),
+      // backgroundColor: const Color(0xFFF44336),
+      // backgroundColor: Colors.,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
