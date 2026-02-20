@@ -79,8 +79,8 @@ class LoadingPage extends HookWidget {
                   if (!isComplete)
                     Column(
                       children: [
-                        Text(
-                    isComplete ? '' : 'Preparing your games...',
+                      ?isComplete ? null:  const Text(
+                     'Preparing your games...',
                     style: AppTextStyles.bodySecondary,
                   ),
                         Center(
@@ -93,7 +93,7 @@ class LoadingPage extends HookWidget {
                                   borderRadius:
                                       BorderRadius.circular(AppSpacing.xl),
                                   child: LinearProgressIndicator(
-                                    minHeight: AppSpacing.xl,
+                                    minHeight: AppSpacing.s24,
                                     value: progress,
                                     backgroundColor: AppColors.lightBlueFill,
                                     valueColor: const AlwaysStoppedAnimation(
