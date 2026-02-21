@@ -24,7 +24,7 @@ class HomeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.go(route),
+      onTap: () => context.push(route),
       borderRadius: BorderRadius.circular(AppSpacing.s20),
       child: Ink(
         decoration: BoxDecoration(

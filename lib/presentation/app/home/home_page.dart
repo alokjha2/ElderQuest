@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppColors.lightBlueFill,
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () => context.go('/settings'),
+          onPressed: () => context.push('/settings'),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),

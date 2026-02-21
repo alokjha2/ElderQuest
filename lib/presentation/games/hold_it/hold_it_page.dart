@@ -10,7 +10,7 @@ import '../../../domain/games/hold_it/hold_it_status.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../shared/end_score_page.dart';
+import '../shared/end_score/end_score_page.dart';
 import 'widgets/jar_fill.dart';
 import 'widgets/score_text.dart';
 
@@ -19,68 +19,70 @@ class HoldItPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HoldItBloc(),
-      child: BlocListener<HoldItBloc, HoldItState>(
-        listenWhen: (prev, next) =>
-            prev.status != next.status &&
-            (next.status == HoldItStatus.success ||
-                next.status == HoldItStatus.fail),
-        listener: (context, state) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => EndScorePage(
-                gameTitle: 'Hold It!',
-                score: state.score.value,
-                playRoute: '/hold-it',
-              ),
-            ),
-          );
-        },
-        child: Scaffold(
-          backgroundColor: const Color(0xFF1F3A2A),
-          body: SafeArea(
-            child: Builder(
-              builder: (context) {
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTapDown: (_) =>
-                      context.read<HoldItBloc>().add(const StartHoldEvent()),
-                  onTapUp: (_) =>
-                      context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
-                  onTapCancel: () =>
-                      context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppSpacing.s24),
-                      child: BlocBuilder<HoldItBloc, HoldItState>(
-                        builder: (context, state) {
-                          final progress = state.heldMs / HoldItGame.maxMs;
+    useEffect(() {
+      context.read<HoldItBloc>().add(const ResetHoldEvent());
+      return null;
+    }, const []);
 
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ScoreText(score: state.score.value),
-                              const SizedBox(height: AppSpacing.s16),
-                              JarFill(progress: progress),
-                              const SizedBox(height: AppSpacing.s32),
-                              Text(
-                                state.status == HoldItStatus.holding
-                                    ? 'Release to stop'
-                                    : 'Press anywhere to fill',
-                                style: AppTextStyles.bodySecondary.copyWith(
-                                  color: AppColors.white,
-                                ),
+    return BlocListener<HoldItBloc, HoldItState>(
+      listenWhen: (prev, next) =>
+          prev.status != next.status &&
+          (next.status == HoldItStatus.success ||
+              next.status == HoldItStatus.fail),
+      listener: (context, state) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => EndScorePage(
+              gameTitle: 'Hold It!',
+              score: state.score.value,
+              playRoute: '/hold-it',
+            ),
+          ),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFF1F3A2A),
+        body: SafeArea(
+          child: Builder(
+            builder: (context) {
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTapDown: (_) =>
+                    context.read<HoldItBloc>().add(const StartHoldEvent()),
+                onTapUp: (_) =>
+                    context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+                onTapCancel: () =>
+                    context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.s24),
+                    child: BlocBuilder<HoldItBloc, HoldItState>(
+                      builder: (context, state) {
+                        final progress = state.heldMs / HoldItGame.maxMs;
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ScoreText(score: state.score.value),
+                            const SizedBox(height: AppSpacing.s16),
+                            JarFill(progress: progress),
+                            const SizedBox(height: AppSpacing.s32),
+                            Text(
+                              state.status == HoldItStatus.holding
+                                  ? 'Release to stop'
+                                  : 'Press anywhere to fill',
+                              style: AppTextStyles.bodySecondary.copyWith(
+                                color: AppColors.white,
                               ),
-                            ],
-                          );
-                        },
-                      ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

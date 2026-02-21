@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -24,7 +25,7 @@ class HeaderBar extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               color: AppColors.settingsTitle,

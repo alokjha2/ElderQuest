@@ -4,7 +4,7 @@ import '../../games/balance_it/balance_it_page.dart';
 import '../../games/hold_it/hold_it_page.dart';
 import '../../games/stop_it/stop_it_page.dart';
 import '../../games/tapme/tapme_page.dart';
-import '../../games/shared/game_intro_page.dart';
+import '../../games/shared/game_intro/game_intro_page.dart';
 import '../home/home_page.dart';
 import '../loading/loading_page.dart';
 import '../settings/settings_page.dart';

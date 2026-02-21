@@ -12,6 +12,7 @@ class TapMeBloc extends Bloc<TapMeEvent, TapMeState> {
     on<TapMeStarted>(_onStarted);
     on<TapMeTapped>(_onTapped);
     on<TapMeTicked>(_onTicked);
+    on<TapMeReset>(_onReset);
   }
 
   void _onStarted(TapMeStarted event, Emitter<TapMeState> emit) {
@@ -36,6 +37,11 @@ class TapMeBloc extends Bloc<TapMeEvent, TapMeState> {
     if (updated.status == TapMeStatus.finished) {
       _timer?.cancel();
     }
+  }
+
+  void _onReset(TapMeReset event, Emitter<TapMeState> emit) {
+    _timer?.cancel();
+    emit(TapMeState(TapMeGame.initial()));
   }
 
   @override
