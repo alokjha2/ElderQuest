@@ -1,3 +1,5 @@
+import 'package:elder_quest/core/component/app_back_button.dart';
+import 'package:elder_quest/core/component/header.dart';
 import 'package:elder_quest/core/theme/app_colors.dart';
 import 'package:elder_quest/core/theme/app_spacing.dart';
 import 'package:elder_quest/core/theme/app_text_styles.dart';
@@ -27,44 +29,18 @@ class GameIntroHeader extends StatelessWidget {
       height: 300,
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(
-        AppSpacing.s18,
-        AppSpacing.s56,
-        AppSpacing.s16,
+        AppSpacing.xl,
+        AppSpacing.s48,
+        AppSpacing.xl,
         AppSpacing.s16,
       ),
       decoration: BoxDecoration(color: topBar),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: onBack,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 20,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xl),
-              Text(
-                title,
-                style: AppTextStyles.tileTitle.copyWith(
-                  color: AppColors.white,
-                  fontSize: 30,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
+
+          Header(title: title, onBack: onBack),
+          
           const SizedBox(height: AppSpacing.s18),
           Text(
             description,
