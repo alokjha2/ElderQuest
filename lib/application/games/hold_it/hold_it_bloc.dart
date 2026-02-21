@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,8 @@ import 'hold_it_state.dart';
 class HoldItBloc extends Bloc<HoldItEvent, HoldItState> {
   final HoldItGame game;
   Timer? _timer;
+  final Random _random = Random();
+  static const double _tolerancePercent = 0.02;
 
   HoldItBloc({HoldItGame? game})
       : game = game ?? HoldItGame.initial(),
@@ -20,6 +23,14 @@ class HoldItBloc extends Bloc<HoldItEvent, HoldItState> {
     on<ReleaseHoldEvent>(_onRelease);
     on<EndGameEvent>(_onEnd);
     on<ResetHoldEvent>(_onReset);
+  }
+
+  int _pickTargetValue() {
+    final values = <int>[];
+    for (int v = 5; v <= 95; v += 5) {
+      values.add(v);
+    }
+    return values[_random.nextInt(values.length)];
   }
 
   void _onStart(StartHoldEvent event, Emitter<HoldItState> emit) {
@@ -45,8 +56,13 @@ class HoldItBloc extends Bloc<HoldItEvent, HoldItState> {
   void _onRelease(ReleaseHoldEvent event, Emitter<HoldItState> emit) {
     if (state.status != HoldItStatus.holding) return;
     _timer?.cancel();
-    if (state.heldMs >= HoldItGame.targetMs &&
-        state.heldMs <= HoldItGame.maxMs) {
+    final targetMs =
+        (HoldItGame.maxMs * (state.targetValue / 100)).round();
+    final toleranceMs = (HoldItGame.maxMs * _tolerancePercent).round();
+    final min = targetMs - toleranceMs;
+    final max = targetMs + toleranceMs;
+
+    if (state.heldMs >= min && state.heldMs <= max) {
       emit(state.copyWith(
         status: HoldItStatus.success,
         score: state.score.increment(),
@@ -63,7 +79,7 @@ class HoldItBloc extends Bloc<HoldItEvent, HoldItState> {
 
   void _onReset(ResetHoldEvent event, Emitter<HoldItState> emit) {
     _timer?.cancel();
-    emit(HoldItState.initial());
+    emit(HoldItState.initial().copyWith(targetValue: _pickTargetValue()));
   }
 
   @override
