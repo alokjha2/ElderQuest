@@ -40,6 +40,7 @@ class _TapMeViewBody extends StatefulWidget {
 class _TapMeViewBodyState extends State<_TapMeViewBody>
     with TickerProviderStateMixin {
   final List<_TapBurst> _bursts = [];
+  final GlobalKey _bodyKey = GlobalKey();
 
   @override
   void initState() {
@@ -73,8 +74,11 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
     });
   }
 
-  void _handleTap(Offset position) {
-    _addBurst(position);
+  void _handleTap(Offset globalPosition) {
+    final box = _bodyKey.currentContext?.findRenderObject() as RenderBox?;
+    final localPosition =
+        box != null ? box.globalToLocal(globalPosition) : globalPosition;
+    _addBurst(localPosition);
     final bloc = context.read<TapMeBloc>();
     final status = bloc.state.game.status;
     if (status == TapMeStatus.initial) {
@@ -109,8 +113,9 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
           backgroundColor: AppColors.hintBlue,
           title: 'TAP ME',
           onBack: () => context.pop(),
-          onTapDown: (details) => _handleTap(details.localPosition),
+          onTapDown: (details) => _handleTap(details.globalPosition),
           body: Stack(
+            key: _bodyKey,
             children: [
               Center(
                 child: BlocBuilder<TapMeBloc, TapMeState>(
@@ -163,10 +168,12 @@ class _TapBurstView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
+    const plusOffsetY = -30.0;
     final target = Offset(screen.width * 0.5, screen.height * 0.28);
+    final startPlus = Offset(burst.position.dx, burst.position.dy + plusOffsetY);
     final drift = Offset(
-      (target.dx - burst.position.dx) * 0.35,
-      (target.dy - burst.position.dy) * 0.35 - 24,
+      (target.dx - startPlus.dx) * 0.35,
+      (target.dy - startPlus.dy) * 0.35 + 24,
     );
 
     final scale = Tween<double>(begin: 0.7, end: 1.25).animate(
@@ -202,8 +209,8 @@ class _TapBurstView extends StatelessWidget {
           child: _TapRipple(ripple: ripple),
         ),
         Positioned(
-          left: burst.position.dx - 24,
-          top: burst.position.dy - 24,
+          left: startPlus.dx - 24,
+          top: startPlus.dy - 24,
           child: AnimatedBuilder(
             animation: burst.controller,
             builder: (context, child) {
