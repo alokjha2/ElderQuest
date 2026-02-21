@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
@@ -72,47 +75,87 @@ class GameIntroPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final difficultyIndex = useState(1);
+    final levelsFuture = useMemoized(_loadLevels);
+    final levelsSnapshot = useFuture(levelsFuture);
+
+    final levels = levelsSnapshot.data ??
+        const [
+          _LevelConfig(
+            key: 'easy',
+            label: 'EASY',
+            emoji: '🙂',
+            color: Color(0xFFB7F2B0),
+          ),
+          _LevelConfig(
+            key: 'medium',
+            label: 'MEDIUM',
+            emoji: '😎',
+            color: Color(0xFFFFD66B),
+          ),
+          _LevelConfig(
+            key: 'hard',
+            label: 'HARD',
+            emoji: '😈',
+            color: Color(0xFF3D2F2F),
+          ),
+        ];
     return Scaffold(
       backgroundColor: const Color(0xFFF7E5D7),
       body: Column(
         children: [
           Container(
+            height: 300,
+            
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(
-              AppSpacing.s16,
-              AppSpacing.s24,
+              AppSpacing.s18,
+              AppSpacing.s56,
               AppSpacing.s16,
               AppSpacing.s16,
             ),
             decoration: BoxDecoration(
               color: topBar,
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(24),
-              ),
+              // borderRadius: const BorderRadius.vertical(
+              //   // bottom: Radius.circular(24),
+              // ),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(
-                    Icons.arrow_back_rounded,
-                    color: AppColors.white,
-                  ),
-                ),
-                Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(20), ), 
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 20,
+                      ),
+                    ),
+                const SizedBox(width: AppSpacing.xl),
+                    
+                     Text(
                   title,
                   style: AppTextStyles.tileTitle.copyWith(
                     color: AppColors.white,
-                    fontSize: 22,
+                    fontSize: 30,
                     letterSpacing: 1.2,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                  ],
+                ),
+               
+                const SizedBox(height: AppSpacing.s18),
                 Text(
                   description,
                   style: AppTextStyles.bodySecondary.copyWith(
                     color: AppColors.white70,
+                    fontSize: 18
                   ),
                 ),
               ],
@@ -138,18 +181,20 @@ class GameIntroPage extends HookWidget {
                 ),
               ),
               CircleAvatar(
-                radius: 32,
-                backgroundColor: accent,
-                child: const Icon(Icons.sentiment_satisfied_alt,
-                    color: AppColors.white, size: 30),
+                radius: 40,
+                backgroundColor: levels[difficultyIndex.value].color,
+                child: Text(
+                  levels[difficultyIndex.value].emoji,
+                  style: const TextStyle(fontSize: 28),
+                ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.s24),
           Text(
-            'MEDIUM',
+            levels[difficultyIndex.value].label,
             style: AppTextStyles.titleMedium.copyWith(
-              color: accent,
+              color: levels[difficultyIndex.value].color,
               fontSize: 24,
               letterSpacing: 1.4,
             ),
@@ -157,37 +202,10 @@ class GameIntroPage extends HookWidget {
           const SizedBox(height: AppSpacing.s16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s24),
-            child: Container(
-              padding: const EdgeInsets.all(AppSpacing.xs),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: accent,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: AppColors.settingsToggleOffBg,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            child: _DifficultySlider(
+              index: difficultyIndex.value,
+              levels: levels,
+              onChanged: (i) => difficultyIndex.value = i,
             ),
           ),
           const Spacer(),
@@ -217,22 +235,167 @@ class GameIntroPage extends HookWidget {
                         style: AppTextStyles.buttonLabel),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.s16),
-                Container(
-                  width: 52,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: AppColors.settingsThumb,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: const Icon(Icons.help_outline,
-                      color: AppColors.white),
-                ),
+                // const SizedBox(width: AppSpacing.s16),
+                // Container(
+                //   width: 52,
+                //   height: 52,
+                //   decoration: BoxDecoration(
+                //     color: AppColors.settingsThumb,
+                //     borderRadius: BorderRadius.circular(14),
+                //   ),
+                //   child: const Icon(Icons.help_outline,
+                //       color: AppColors.white),
+                // ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LevelConfig {
+  final String key;
+  final String label;
+  final String emoji;
+  final Color color;
+
+  const _LevelConfig({
+    required this.key,
+    required this.label,
+    required this.emoji,
+    required this.color,
+  });
+}
+
+Future<List<_LevelConfig>> _loadLevels() async {
+  final raw = await rootBundle.loadString('assets/json/level_config.json');
+  final data = jsonDecode(raw) as Map<String, dynamic>;
+  final levels = (data['levels'] as List<dynamic>).cast<Map<String, dynamic>>();
+  return levels.map((item) {
+    return _LevelConfig(
+      key: item['key'] as String,
+      label: item['label'] as String,
+      emoji: item['emoji'] as String,
+      color: _hexToColor(item['color'] as String),
+    );
+  }).toList();
+}
+
+Color _hexToColor(String value) {
+  final hex = value.replaceAll('#', '');
+  final buffer = StringBuffer();
+  if (hex.length == 6) buffer.write('ff');
+  buffer.write(hex);
+  return Color(int.parse(buffer.toString(), radix: 16));
+}
+
+class _DifficultySlider extends StatelessWidget {
+  final int index;
+  final List<_LevelConfig> levels;
+  final ValueChanged<int> onChanged;
+
+  const _DifficultySlider({
+    required this.index,
+    required this.levels,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final trackColors = levels.map((e) => e.color).toList();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final knobSize = 52.0;
+        final trackHeight = 40.0;
+        final trackPadding = 4.0;
+        final trackRadius = 24.0;
+        final available = (constraints.maxWidth - knobSize).clamp(0, double.infinity);
+        final x = (available / (levels.length - 1)) * index;
+        final progress = index / (levels.length - 1);
+
+        return SizedBox(
+          height: 62,
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              GestureDetector(
+                onTapUp: (details) {
+                  final third = constraints.maxWidth / levels.length;
+                  final localX = details.localPosition.dx;
+                  final i =
+                      (localX / third).clamp(0, levels.length - 1).floor();
+                  onChanged(i);
+                },
+                child: Container(
+                  height: trackHeight,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(trackRadius),
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, inner) {
+                      return Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.settingsToggleOffBg,
+                              borderRadius: BorderRadius.circular(trackRadius),
+                            ),
+                          ),
+                          FractionallySizedBox(
+                            widthFactor: progress,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: trackColors[index],
+                                borderRadius: BorderRadius.circular(trackRadius),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOut,
+                left: x,
+                child: Container(
+                  width: knobSize,
+                  height: knobSize,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.white, width: 6),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.12),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: knobSize - 16,
+                    height: knobSize - 16,
+                    decoration: BoxDecoration(
+                      color: trackColors[index],
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
