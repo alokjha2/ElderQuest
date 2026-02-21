@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../../core/audio/audio_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-// import 'home_app_bar.dart';
 import 'home_grid.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends HookWidget {
   const HomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      Future<void>(() async {
+        await AudioService.instance.playBackgroundMusic(
+          'assets/sounds/bg2.mp3',
+          volume: 0.1,
+        );
+      });
+      return () {
+        AudioService.instance.pauseBackgroundMusic();
+      };
+    }, const []);
+
     return const Padding(
       padding: EdgeInsets.all(AppSpacing.xl),
       child: HomeGrid(
