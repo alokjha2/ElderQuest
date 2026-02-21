@@ -41,7 +41,7 @@ class HoldItPage extends HookWidget {
         );
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFF1F3A2A),
+        backgroundColor: AppColors.lightBlue,
         body: SafeArea(
           child: Builder(
             builder: (context) {

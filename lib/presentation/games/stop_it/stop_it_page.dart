@@ -11,6 +11,7 @@ import '../../../domain/games/stop_it/stop_it_status.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../shared/end_score/end_score_page.dart';
+import 'widgets/led_display_panel.dart';
 
 class StopItPage extends HookWidget {
   const StopItPage({super.key});
@@ -71,18 +72,31 @@ class StopItPage extends HookWidget {
                       const SizedBox(height: AppSpacing.s24),
                       BlocBuilder<StopItBloc, StopItState>(
                         builder: (context, state) {
-                          final targetSeconds = (state.targetHundredths / 100)
-                              .toStringAsFixed(0);
-                          final currentSeconds = (state.elapsedHundredths / 100)
-                              .toStringAsFixed(2);
+                          final targetSeconds =
+                              (state.targetHundredths / 100).floor();
+                          final remaining = (state.maxHundredths -
+                                  state.elapsedHundredths)
+                              .clamp(0, state.maxHundredths) as int;
+                          final remainingSeconds = (remaining / 100).floor();
+                          final remainingHundredths = remaining % 100;
+
+                          final targetDisplay = '${targetSeconds}:00';
+                          final remainingDisplay =
+                              '${remainingSeconds}:${remainingHundredths.toString().padLeft(2, '0')}';
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Target: $targetSeconds s',
-                                  style: AppTextStyles.scoreText),
-                              const SizedBox(height: AppSpacing.s16),
-                              Text('Time: $currentSeconds s',
-                                  style: AppTextStyles.scoreText),
+                              LedDisplayPanel(
+                                label: 'TARGET',
+                                value: targetDisplay,
+                                glowColor: const Color(0xFFF2F2F2),
+                              ),
+                              const SizedBox(height: AppSpacing.lg),
+                              LedDisplayPanel(
+                                label: 'TIME',
+                                value: remainingDisplay,
+                                glowColor: const Color(0xFFF2F2F2),
+                              ),
                             ],
                           );
                         },
