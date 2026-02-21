@@ -11,6 +11,7 @@ import '../../../domain/games/hold_it/hold_it_status.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/component/game_page_card.dart';
 import '../shared/end_score/end_score_page.dart';
 import 'widgets/jar_fill.dart';
 import 'widgets/score_text.dart';
@@ -41,84 +42,48 @@ class HoldItPage extends HookWidget {
           ),
         );
       },
-      child: Scaffold(
-        backgroundColor: AppColors.lightBlue,
-        body: SafeArea(
-          child: Builder(
-            builder: (context) {
-              return GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTapDown: (_) =>
-                    context.read<HoldItBloc>().add(const StartHoldEvent()),
-                onTapUp: (_) =>
-                    context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
-                onTapCancel: () =>
-                    context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.s24),
-                  child: BlocBuilder<HoldItBloc, HoldItState>(
-                    builder: (context, state) {
-                      final progress = state.heldMs / HoldItGame.maxMs;
+      child: Builder(
+        builder: (context) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown: (_) =>
+                context.read<HoldItBloc>().add(const StartHoldEvent()),
+            onTapUp: (_) =>
+                context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+            onTapCancel: () =>
+                context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+            child: BlocBuilder<HoldItBloc, HoldItState>(
+              builder: (context, state) {
+                final progress = state.heldMs / HoldItGame.maxMs;
 
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppSpacing.s16),
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () => context.pop(),
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: const Icon(
-                                      Icons.arrow_back_ios_new_rounded,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: AppSpacing.xl),
-                                Text(
-                                  'HOLD IT',
-                                  style: AppTextStyles.tileTitle.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 26,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.s24),
-                          ScoreText(score: state.score.value),
-                          const SizedBox(height: AppSpacing.s16),
-                          JarFill(
-                            progress: progress,
-                            targetValue: state.targetValue,
-                          ),
-                          const SizedBox(height: AppSpacing.s32),
-                          Text(
-                            state.status == HoldItStatus.holding
-                                ? 'Release to stop'
-                                : 'Press anywhere to fill',
-                            style: AppTextStyles.bodySecondary.copyWith(
-                              color: AppColors.white,
-                            ),
-                          ),
-                          const Spacer(),
-                        ],
-                      );
-                    },
+                return GamePageCard(
+                  title: 'HOLD IT',
+                  onBack: () => context.pop(),
+                  backgroundColor: AppColors.lightBlue,
+                  body: Column(
+                    children: [
+                      ScoreText(score: state.score.value),
+                      const SizedBox(height: AppSpacing.s16),
+                      JarFill(
+                        progress: progress,
+                        targetValue: state.targetValue,
+                      ),
+                      const SizedBox(height: AppSpacing.s32),
+                      Text(
+                        state.status == HoldItStatus.holding
+                            ? 'Release to stop'
+                            : 'Press anywhere to fill',
+                        style: AppTextStyles.bodySecondary.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

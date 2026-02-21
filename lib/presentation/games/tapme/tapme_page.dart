@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/component/game_page_card.dart';
 import '../shared/end_score/end_score_page.dart';
 
 class TapMePage extends StatelessWidget {
@@ -88,9 +89,7 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.hintBlue,
-      body: BlocListener<TapMeBloc, TapMeState>(
+    return BlocListener<TapMeBloc, TapMeState>(
         listenWhen: (prev, curr) => prev.game.status != curr.game.status,
         listener: (context, state) {
           if (state.game.status == TapMeStatus.finished) {
@@ -106,90 +105,45 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
             );
           }
         },
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
+        child: GamePageCard(
+          backgroundColor: AppColors.hintBlue,
+          title: 'TAP ME',
+          onBack: () => context.pop(),
           onTapDown: (details) => _handleTap(details.localPosition),
-          child: Stack(
+          body: Stack(
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.s18,
-                      AppSpacing.s56,
-                      AppSpacing.s18,
-                      AppSpacing.s16,
-                    ),
-                    child: Row(
+              Center(
+                child: BlocBuilder<TapMeBloc, TapMeState>(
+                  builder: (context, state) {
+                    final game = state.game;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () => context.pop(),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.xl),
                         Text(
-                          'TAP ME',
-                          style: AppTextStyles.tileTitle.copyWith(
-                            color: AppColors.white,
-                            fontSize: 30,
-                            letterSpacing: 1.2,
-                          ),
+                          "Time: ${game.remainingTime}",
+                          style: AppTextStyles.scoreText,
+                        ),
+                        const SizedBox(height: AppSpacing.s20),
+                        Text(
+                          "Score: ${game.score.value}",
+                          style: AppTextStyles.scoreText,
+                        ),
+                        const SizedBox(height: AppSpacing.s40),
+                        Text(
+                          game.status == TapMeStatus.initial
+                              ? 'Tap anywhere to start'
+                              : 'Tap anywhere',
+                          style: AppTextStyles.bodySecondary,
                         ),
                       ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: BlocBuilder<TapMeBloc, TapMeState>(
-                        builder: (context, state) {
-                          final game = state.game;
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Time: ${game.remainingTime}",
-                                style: AppTextStyles.scoreText,
-                              ),
-                              const SizedBox(height: AppSpacing.s20),
-                              Text(
-                                "Score: ${game.score.value}",
-                                style: AppTextStyles.scoreText,
-                              ),
-                              const SizedBox(height: AppSpacing.s40),
-                              Text(
-                                game.status == TapMeStatus.initial
-                                    ? 'Tap anywhere to start'
-                                    : 'Tap anywhere',
-                                style: AppTextStyles.bodySecondary,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ..._bursts.map(
-                (burst) => _TapBurstView(
-                  burst: burst,
+                    );
+                  },
                 ),
               ),
+              ..._bursts.map((burst) => _TapBurstView(burst: burst)),
             ],
           ),
         ),
-      ),
     );
   }
 }
