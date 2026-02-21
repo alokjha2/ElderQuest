@@ -48,13 +48,13 @@ class HomeBody extends HookWidget {
             color: AppColors.tileOrange,
             textColor: AppColors.white,
           ),
-          HomeTileItem(
-            title: 'Balance It!',
-            subtitle: 'Stay steady',
-            route: '/game-intro/balance-it',
-            color: AppColors.tilePurple,
-            textColor: AppColors.white,
-          ),
+          // HomeTileItem(
+          //   title: 'Balance It!',
+          //   subtitle: 'Stay steady',
+          //   route: '/game-intro/balance-it',
+          //   color: AppColors.tilePurple,
+          //   textColor: AppColors.white,
+          // ),
         ],
       ),
     );

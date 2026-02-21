@@ -30,7 +30,9 @@ class GameIntroPage extends HookWidget {
       case 'tapme':
         return const GameIntroPage(
           title: 'TAP ME!',
-          description: 'Tap as fast as you can to score higher.',
+          description:
+    ' – Tap as fast as you can to score higher.\n\n'
+    ' – The highest score so far is 129. Can you beat it?',
           playRoute: '/tapme',
           accent: AppColors.primary,
           topBar: Color(0xFF3B2E54),
@@ -38,8 +40,10 @@ class GameIntroPage extends HookWidget {
       case 'stop-it':
         return const GameIntroPage(
           title: 'STOP IT!',
+          
           description:
-              'Press start and stop as close as possible to 10.00 seconds.',
+            'Press Start and Stop as close to the target time as possible. \n \n'
+            'Only 1 out of 33 people can get 100 score in the game. Can you be one of them?',
           playRoute: '/stop-it',
           accent: AppColors.accent,
           topBar: Color(0xFF3B2E54),
@@ -47,19 +51,21 @@ class GameIntroPage extends HookWidget {
       case 'hold-it':
         return const GameIntroPage(
           title: 'HOLD IT!',
-          description: 'Hold until the jar fills, but don\'t overflow.',
+          description:
+    'Hold until the jar fills, but don\'t let it overflow.\n\n'
+    'You need Arjun-level precision to score 100 in this game. Do you have what it takes?',
           playRoute: '/hold-it',
           accent: AppColors.tileOrange,
           topBar: Color(0xFF3B2E54),
         );
-      case 'balance-it':
-        return const GameIntroPage(
-          title: 'BALANCE IT!',
-          description: 'Keep it steady as long as you can.',
-          playRoute: '/balance-it',
-          accent: AppColors.tilePurple,
-          topBar: Color(0xFF3B2E54),
-        );
+      // case 'balance-it':
+      //   return const GameIntroPage(
+      //     title: 'BALANCE IT!',
+      //     description: 'Keep it steady as long as you can.',
+      //     playRoute: '/balance-it',
+      //     accent: AppColors.tilePurple,
+      //     topBar: Color(0xFF3B2E54),
+      //   );
       default:
         return const GameIntroPage(
           title: 'GAME',
