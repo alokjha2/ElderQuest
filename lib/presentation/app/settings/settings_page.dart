@@ -1,3 +1,5 @@
+import 'package:elder_quest/core/audio/audio_permissions.dart';
+import 'package:elder_quest/core/audio/game_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -14,6 +16,12 @@ class SettingsPage extends HookWidget {
     final musicOn = useState(true);
     final darkMode = useState(false);
     final vibrationOn = useState(true);
+    useEffect(() {
+      Future<void>(() async {
+        musicOn.value = await AudioPermissions.instance.checkPermission();
+      });
+      return null;
+    }, const []);
 
     return Scaffold(
       backgroundColor: AppColors.settingsBg,
@@ -41,7 +49,11 @@ class SettingsPage extends HookWidget {
                     _ToggleRow(
                       label: 'Music',
                       value: musicOn.value,
-                      onChanged: (v) => musicOn.value = v,
+                      onChanged: (v) async{
+                        await AudioPermissions.instance.setPermission(v);
+                        musicOn.value = v;
+                        
+                        },
                     ),
                     const SizedBox(height: AppSpacing.xl),
                     _ToggleRow(
@@ -159,7 +171,11 @@ class _ToggleRow extends StatelessWidget {
       children: [
         Expanded(child: Text(label, style: AppTextStyles.settingsSection)),
         GestureDetector(
-          onTap: () => onChanged(!value),
+          onTap: () async {
+            final sfx = GameAudioPlayer();
+            onChanged(!value);
+            await sfx.playSfx('assets/sounds/start.mp3');
+          },
           child: Container(
             width: AppSpacing.s58,
             height: AppSpacing.s32,
