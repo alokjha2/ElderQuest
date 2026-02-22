@@ -36,7 +36,7 @@ class GameIntroDifficulty extends StatelessWidget {
               width: 88,
               height: 88,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.white.withOpacity(0.4),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -48,8 +48,8 @@ class GameIntroDifficulty extends StatelessWidget {
               ),
             ),
             CircleAvatar(
-              radius: 40,
-              backgroundColor: current.color,
+              radius: 35,
+              backgroundColor: current.color.withOpacity(0.7),
               child: Text(
                 current.emoji,
                 style: const TextStyle(fontSize: 28),

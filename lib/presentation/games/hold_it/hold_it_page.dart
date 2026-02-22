@@ -59,7 +59,7 @@ class HoldItPage extends HookWidget {
                 return GamePageCard(
                   title: 'HOLD IT',
                   onBack: () => context.pop(),
-                  backgroundColor: AppColors.lightBlue,
+                  // backgroundColor: AppColors.lightBlue,
                   body: Column(
                     children: [
                       ScoreText(score: state.score.value),

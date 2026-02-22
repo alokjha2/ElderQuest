@@ -54,7 +54,7 @@ class StopItPage extends HookWidget {
             child: GamePageCard(
               title: 'STOP IT',
               onBack: () => context.go('/home'),
-              backgroundColor: AppColors.lightPurple,
+              // backgroundColor: AppColors.lightPurple,
               body: Column(
                 children: [
                   BlocBuilder<StopItBloc, StopItState>(

@@ -1,3 +1,4 @@
+import 'package:elder_quest/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -18,8 +19,8 @@ class GamePageCard extends HookWidget {
     required this.title,
     required this.onBack,
     required this.body,
-    this.padding = const EdgeInsets.all(AppSpacing.s24),
-    this.backgroundColor,
+    this.padding = const EdgeInsets.fromLTRB(AppSpacing.s24, AppSpacing.s32,AppSpacing.md, AppSpacing.md,),
+    this.backgroundColor = AppColors.hintBlue,
     this.onTapDown,
     this.onTap,
   });
@@ -28,24 +29,19 @@ class GamePageCard extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTapDown: onTapDown,
-          onTap: onTap,
-          child: Padding(
-            padding: padding,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.s16),
-                  child: Header(title: title, onBack: onBack),
-                ),
-                const SizedBox(height: AppSpacing.s24),
-                Expanded(child: body),
-              ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: onTapDown,
+        onTap: onTap,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(AppSpacing.s20, AppSpacing.s44,AppSpacing.md, AppSpacing.md,),
+              child: Header(title: title, onBack: onBack),
             ),
-          ),
+            const SizedBox(height: AppSpacing.s24),
+            Expanded(child: body),
+          ],
         ),
       ),
     );

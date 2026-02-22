@@ -44,6 +44,7 @@ class GameIntroHeader extends StatelessWidget {
           const SizedBox(height: AppSpacing.s18),
           Text(
             description,
+            // textAlign: TextAlign.center,
             style: AppTextStyles.bodySecondary.copyWith(
               color: AppColors.white70,
               fontSize: 18,
