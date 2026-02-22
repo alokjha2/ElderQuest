@@ -7,6 +7,8 @@ class StopItState {
   final int targetHundredths;
   final int maxHundredths;
   final Score score;
+  final double difference;
+  final String resultType;
 
   const StopItState({
     required this.status,
@@ -14,6 +16,8 @@ class StopItState {
     required this.targetHundredths,
     required this.maxHundredths,
     required this.score,
+    required this.difference,
+    required this.resultType,
   });
 
   factory StopItState.initial() {
@@ -23,6 +27,8 @@ class StopItState {
       targetHundredths: 1000,
       maxHundredths: 1400,
       score: Score(0),
+      difference: 0,
+      resultType: 'ok',
     );
   }
 
@@ -32,6 +38,8 @@ class StopItState {
     int? targetHundredths,
     int? maxHundredths,
     Score? score,
+    double? difference,
+    String? resultType,
   }) {
     return StopItState(
       status: status ?? this.status,
@@ -39,6 +47,8 @@ class StopItState {
       targetHundredths: targetHundredths ?? this.targetHundredths,
       maxHundredths: maxHundredths ?? this.maxHundredths,
       score: score ?? this.score,
+      difference: difference ?? this.difference,
+      resultType: resultType ?? this.resultType,
     );
   }
 }

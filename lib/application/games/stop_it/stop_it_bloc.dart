@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/games/stop_it/stop_it_game.dart';
 import '../../../domain/games/stop_it/score.dart';
+import '../../../domain/games/stop_it/stop_it_scoring.dart';
 import '../../../domain/games/stop_it/stop_it_status.dart';
 import 'stop_it_event.dart';
 import 'stop_it_state.dart';
@@ -31,6 +32,8 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
       targetHundredths: target,
       maxHundredths: target + buffer,
       score: const Score(0),
+      difference: 0,
+      resultType: stopItResultOk,
     );
   }
 
@@ -41,8 +44,10 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
   }
 
   static int _pickBufferHundredths() {
-    final options = [5, 6, 10, 14, 18];
-    final bufferSeconds = options[Random().nextInt(options.length)];
+    const minSeconds = 4;
+    const maxSeconds = 10;
+    final bufferSeconds = Random().nextInt(maxSeconds - minSeconds + 1) +
+        minSeconds;
     return bufferSeconds * 100;
   }
 
@@ -55,6 +60,8 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
       targetHundredths: state.targetHundredths,
       maxHundredths: state.targetHundredths + buffer,
       score: const Score(0),
+      difference: 0,
+      resultType: stopItResultOk,
     ));
     _timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
       add(const StopItTicked());
@@ -64,8 +71,7 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
   void _onTicked(StopItTicked event, Emitter<StopItState> emit) {
     if (state.status != StopItStatus.running) return;
     final nextElapsed = state.elapsedHundredths + 1;
-    if (nextElapsed >= state.targetHundredths ||
-        nextElapsed >= state.maxHundredths) {
+    if (nextElapsed >= state.maxHundredths) {
       _finish(nextElapsed, emit);
       return;
     }
@@ -88,21 +94,25 @@ class StopItBloc extends Bloc<StopItEvent, StopItState> {
       targetHundredths: target,
       maxHundredths: target + buffer,
       score: const Score(0),
+      difference: 0,
+      resultType: stopItResultOk,
     ));
   }
 
   void _finish(int elapsed, Emitter<StopItState> emit) {
     _timer?.cancel();
-    final score = StopItGame(
-      status: state.status,
-      elapsedHundredths: elapsed,
-      targetHundredths: state.targetHundredths,
-      score: state.score,
-    ).evaluateScore(elapsed);
+    final stopTimeSeconds = elapsed / 100.0;
+    final targetTimeSeconds = state.targetHundredths / 100.0;
+    final result = calculateStopItScore(
+      stopTimeSeconds: stopTimeSeconds,
+      targetTimeSeconds: targetTimeSeconds,
+    );
     emit(state.copyWith(
       status: StopItStatus.finished,
       elapsedHundredths: elapsed,
-      score: score,
+      score: Score(result.score),
+      difference: result.difference,
+      resultType: result.resultType,
     ));
   }
 
