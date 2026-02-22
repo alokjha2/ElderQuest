@@ -1,0 +1,54 @@
+import '../../../domain/games/stop_it/score.dart';
+import '../../../domain/games/stop_it/stop_it_status.dart';
+
+class StopItState {
+  final StopItStatus status;
+  final int elapsedHundredths;
+  final int targetHundredths;
+  final int maxHundredths;
+  final Score score;
+  final double difference;
+  final String resultType;
+
+  const StopItState({
+    required this.status,
+    required this.elapsedHundredths,
+    required this.targetHundredths,
+    required this.maxHundredths,
+    required this.score,
+    required this.difference,
+    required this.resultType,
+  });
+
+  factory StopItState.initial() {
+    return const StopItState(
+      status: StopItStatus.idle,
+      elapsedHundredths: 0,
+      targetHundredths: 1000,
+      maxHundredths: 1400,
+      score: Score(0),
+      difference: 0,
+      resultType: 'ok',
+    );
+  }
+
+  StopItState copyWith({
+    StopItStatus? status,
+    int? elapsedHundredths,
+    int? targetHundredths,
+    int? maxHundredths,
+    Score? score,
+    double? difference,
+    String? resultType,
+  }) {
+    return StopItState(
+      status: status ?? this.status,
+      elapsedHundredths: elapsedHundredths ?? this.elapsedHundredths,
+      targetHundredths: targetHundredths ?? this.targetHundredths,
+      maxHundredths: maxHundredths ?? this.maxHundredths,
+      score: score ?? this.score,
+      difference: difference ?? this.difference,
+      resultType: resultType ?? this.resultType,
+    );
+  }
+}

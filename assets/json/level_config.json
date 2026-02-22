@@ -1,0 +1,22 @@
+{
+  "levels": [
+    {
+      "key": "easy",
+      "label": "EASY",
+      "emoji": "🙂",
+      "color": "#2E7D32"
+    },
+    {
+      "key": "medium",
+      "label": "MEDIUM",
+      "emoji": "😎",
+      "color": "#F59E0B"
+    },
+    {
+      "key": "hard",
+      "label": "HARD",
+      "emoji": "😈",
+      "color": "#3D2F2F"
+    }
+  ]
+}

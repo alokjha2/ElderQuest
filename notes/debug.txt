@@ -1,0 +1,5 @@
+fvm flutter run -t lib/main.dart 
+
+fvm flutter clean
+fvm flutter pub get
+fvm flutter build appbundle 
