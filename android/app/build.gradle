@@ -2,7 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id "com.google.gms.google-services"
+    // id "com.google.gms.google-services"
 }
 
 def keystoreProperties = new Properties()
@@ -55,8 +55,8 @@ flutter {
 }
 
 dependencies {
-    implementation platform("com.google.firebase:firebase-bom:32.8.1")
-    implementation "com.google.firebase:firebase-analytics"
+    // implementation platform("com.google.firebase:firebase-bom:32.8.1")
+    // implementation "com.google.firebase:firebase-analytics"
     implementation "com.google.android.play:app-update:2.1.0"
     implementation "com.google.android.play:app-update-ktx:2.1.0"
 }
