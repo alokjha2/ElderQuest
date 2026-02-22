@@ -97,14 +97,12 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
         listenWhen: (prev, curr) => prev.game.status != curr.game.status,
         listener: (context, state) {
           if (state.game.status == TapMeStatus.finished) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => EndScorePage(
-                  gameTitle: 'Tap Me!',
-                  score: state.game.score.value,
-                  playRoute: '/tapme',
-                ),
+            context.go(
+              '/end-score',
+              extra: EndScoreArgs(
+                gameTitle: 'Tap Me!',
+                score: state.game.score.value,
+                playRoute: '/tapme',
               ),
             );
           }

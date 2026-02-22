@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../games/balance_it/balance_it_page.dart';
 import '../../games/hold_it/hold_it_page.dart';
+import '../../games/shared/end_score/end_score_page.dart';
 import '../../games/stop_it/stop_it_page.dart';
 import '../../games/tapme/tapme_page.dart';
 import '../../games/shared/game_intro/game_intro_page.dart';
@@ -26,6 +27,21 @@ class AppRouter {
         builder: (context, state) {
           final game = state.pathParameters['game'] ?? '';
           return GameIntroPage.forGame(game);
+        },
+      ),
+      GoRoute(
+        path: '/end-score',
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is! EndScoreArgs) {
+            return const HomePage();
+          }
+          return EndScorePage(
+            gameTitle: extra.gameTitle,
+            score: extra.score,
+            playRoute: extra.playRoute,
+            bestLabel: extra.bestLabel,
+          );
         },
       ),
       GoRoute(

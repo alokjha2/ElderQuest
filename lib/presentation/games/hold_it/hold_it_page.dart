@@ -32,13 +32,12 @@ class HoldItPage extends HookWidget {
           (next.status == HoldItStatus.success ||
               next.status == HoldItStatus.fail),
       listener: (context, state) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => EndScorePage(
-              gameTitle: 'Hold It!',
-              score: state.score.value,
-              playRoute: '/hold-it',
-            ),
+        context.go(
+          '/end-score',
+          extra: EndScoreArgs(
+            gameTitle: 'Hold It!',
+            score: state.score.value,
+            playRoute: '/hold-it',
           ),
         );
       },

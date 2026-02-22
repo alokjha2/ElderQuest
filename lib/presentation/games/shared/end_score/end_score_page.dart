@@ -26,6 +26,20 @@ enum EndScoreScreenColor {
   const EndScoreScreenColor(this.color);
 }
 
+class EndScoreArgs {
+  final String gameTitle;
+  final int score;
+  final String bestLabel;
+  final String playRoute;
+
+  const EndScoreArgs({
+    required this.gameTitle,
+    required this.score,
+    required this.playRoute,
+    this.bestLabel = 'DAILY BEST',
+  });
+}
+
 
 class EndScorePage extends HookWidget {
   final String gameTitle;

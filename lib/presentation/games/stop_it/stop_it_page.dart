@@ -29,13 +29,12 @@ class StopItPage extends HookWidget {
           prev.status != StopItStatus.finished &&
           next.status == StopItStatus.finished,
       listener: (context, state) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => EndScorePage(
-              gameTitle: 'Stop It!',
-              score: state.score.value,
-              playRoute: '/stop-it',
-            ),
+        context.go(
+          '/end-score',
+          extra: EndScoreArgs(
+            gameTitle: 'Stop It!',
+            score: state.score.value,
+            playRoute: '/stop-it',
           ),
         );
       },
