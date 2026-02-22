@@ -1,11 +1,14 @@
 import 'package:elder_quest/application/games/tapme/tapme_bloc.dart';
 import 'package:elder_quest/application/games/tapme/tapme_event.dart';
 import 'package:elder_quest/application/games/tapme/tapme_state.dart';
+import 'package:elder_quest/core/audio/audio_levels.dart';
+import 'package:elder_quest/core/audio/game_audio_player.dart';
 import 'package:elder_quest/domain/games/tapme/tapme_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/audio/audio_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -41,10 +44,16 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
     with TickerProviderStateMixin {
   final List<_TapBurst> _bursts = [];
   final GlobalKey _bodyKey = GlobalKey();
+  late final GameAudioPlayer _tapSfxPlayer;
+  late final GameAudioPlayer _tickSfxPlayer;
 
   @override
   void initState() {
     super.initState();
+    _tapSfxPlayer = GameAudioPlayer();
+    _tickSfxPlayer = GameAudioPlayer();
+    AudioService.instance
+        .setBackgroundVolume(AudioService.gameplayBackgroundVolume);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       context.read<TapMeBloc>().add(TapMeReset());
@@ -53,6 +62,8 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
 
   @override
   void dispose() {
+    _tapSfxPlayer.dispose();
+    _tickSfxPlayer.dispose();
     for (final burst in _bursts) {
       burst.controller.dispose();
     }
@@ -79,6 +90,10 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
     final localPosition =
         box != null ? box.globalToLocal(globalPosition) : globalPosition;
     _addBurst(localPosition);
+    _tapSfxPlayer.playSfx(
+      'assets/sounds/tapping.mp3',
+      volume: AudioLevels.tapSfxVolume,
+    );
     final bloc = context.read<TapMeBloc>();
     final status = bloc.state.game.status;
     if (status == TapMeStatus.initial) {
@@ -93,21 +108,36 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TapMeBloc, TapMeState>(
-        listenWhen: (prev, curr) => prev.game.status != curr.game.status,
-        listener: (context, state) {
-          if (state.game.status == TapMeStatus.finished) {
-            context.go(
-              '/end-score',
-              extra: EndScoreArgs(
-                gameTitle: 'Tap Me!',
-                score: state.game.score.value,
-                playRoute: '/tapme',
-              ),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TapMeBloc, TapMeState>(
+          listenWhen: (prev, curr) => prev.game.status != curr.game.status,
+          listener: (context, state) {
+            if (state.game.status == TapMeStatus.finished) {
+              context.go(
+                '/end-score',
+                extra: EndScoreArgs(
+                  gameTitle: 'Tap Me!',
+                  score: state.game.score.value,
+                  playRoute: '/tapme',
+                ),
+              );
+            }
+          },
+        ),
+        BlocListener<TapMeBloc, TapMeState>(
+          listenWhen: (prev, curr) =>
+              prev.game.remainingTime != curr.game.remainingTime &&
+              curr.game.status == TapMeStatus.playing,
+          listener: (context, state) {
+            _tickSfxPlayer.playSfx(
+              'assets/sounds/tick_tick.mp3',
+              volume: AudioLevels.tickSfxVolume,
             );
-          }
-        },
-        child: GamePageCard(
+          },
+        ),
+      ],
+      child: GamePageCard(
           backgroundColor: AppColors.hintBlue,
           title: 'TAP ME',
           onBack: () => context.pop(),
@@ -119,12 +149,18 @@ class _TapMeViewBodyState extends State<_TapMeViewBody>
                 child: BlocBuilder<TapMeBloc, TapMeState>(
                   builder: (context, state) {
                     final game = state.game;
+                    final timeColor = game.remainingTime <= 3 &&
+                            game.status == TapMeStatus.playing
+                        ? AppColors.danger
+                        : AppTextStyles.scoreText.color;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Time: ${game.remainingTime}",
-                          style: AppTextStyles.scoreText,
+                          style: AppTextStyles.scoreText.copyWith(
+                            color: timeColor,
+                          ),
                         ),
                         const SizedBox(height: AppSpacing.s20),
                         Text(

@@ -22,6 +22,7 @@ class GameAudioPlayer {
       await _player.setAsset(assetPath);
     }
 
+    await _player.seek(Duration.zero);
     await _player.setLoopMode(loop ? LoopMode.one : LoopMode.off);
     await _player.setVolume(volume);
     await _player.play();

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/audio/audio_service.dart';
 import '../../../application/games/stop_it/stop_it_bloc.dart';
 import '../../../application/games/stop_it/stop_it_event.dart';
 import '../../../application/games/stop_it/stop_it_state.dart';
@@ -20,6 +21,8 @@ class StopItPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
+      AudioService.instance
+          .setBackgroundVolume(AudioService.gameplayBackgroundVolume);
       context.read<StopItBloc>().add(const StopItReset());
       return null;
     }, const []);

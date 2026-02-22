@@ -9,6 +9,7 @@ class AudioService with WidgetsBindingObserver {
   }
 
   static final AudioService instance = AudioService._();
+  static const double gameplayBackgroundVolume = 0.03;
 
   final AudioPlayer _player = AudioPlayer();
 

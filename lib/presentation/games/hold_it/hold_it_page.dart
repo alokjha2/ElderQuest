@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/audio/audio_service.dart';
+import '../../../core/audio/audio_levels.dart';
+import '../../../core/audio/game_audio_player.dart';
 import '../../../application/games/hold_it/hold_it_bloc.dart';
 import '../../../application/games/hold_it/hold_it_event.dart';
 import '../../../application/games/hold_it/hold_it_state.dart';
@@ -21,9 +24,14 @@ class HoldItPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final waterSfx = useMemoized(GameAudioPlayer.new);
     useEffect(() {
+      AudioService.instance
+          .setBackgroundVolume(AudioService.gameplayBackgroundVolume);
       context.read<HoldItBloc>().add(const ResetHoldEvent());
-      return null;
+      return () {
+        waterSfx.dispose();
+      };
     }, const []);
 
     return BlocListener<HoldItBloc, HoldItState>(
@@ -45,12 +53,22 @@ class HoldItPage extends HookWidget {
         builder: (context) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTapDown: (_) =>
-                context.read<HoldItBloc>().add(const StartHoldEvent()),
-            onTapUp: (_) =>
-                context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
-            onTapCancel: () =>
-                context.read<HoldItBloc>().add(const ReleaseHoldEvent()),
+            onTapDown: (_) {
+              waterSfx.playSfx(
+                'assets/sounds/water_filling.mp3',
+                volume: AudioLevels.waterSfxVolume,
+                loop: true,
+              );
+              context.read<HoldItBloc>().add(const StartHoldEvent());
+            },
+            onTapUp: (_) {
+              waterSfx.stopSfx();
+              context.read<HoldItBloc>().add(const ReleaseHoldEvent());
+            },
+            onTapCancel: () {
+              waterSfx.stopSfx();
+              context.read<HoldItBloc>().add(const ReleaseHoldEvent());
+            },
             child: BlocBuilder<HoldItBloc, HoldItState>(
               builder: (context, state) {
                 final progress = state.heldMs / HoldItGame.maxMs;
