@@ -71,6 +71,7 @@ class EndScorePage extends HookWidget {
     return Screenshot(
       controller: controller,
       child: GamePageCard(
+        underLine: false,
         bodypadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s28, vertical: AppSpacing.s16),
         backgroundColor: backgroundColor,
        
