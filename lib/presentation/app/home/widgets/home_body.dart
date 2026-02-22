@@ -28,25 +28,28 @@ class HomeBody extends HookWidget {
       child: HomeGrid(
         items: [
           HomeTileItem(
+            title: 'Hold It!',
+            subtitle: "Don't spill",
+            route: '/game-intro/hold-it',
+            color: AppColors.tilePurple,
+            textColor: AppColors.white,
+            imagePath: 'assets/images/beaker_hold_it.png',
+          ),
+          HomeTileItem(
             title: 'Tap Me!',
             subtitle: 'Fast fingers',
             route: '/game-intro/tapme',
             color: AppColors.primary,
             textColor: AppColors.white,
+            imagePath: 'assets/images/tap_it_click.png',
           ),
           HomeTileItem(
             title: 'Stop It!',
             subtitle: 'Perfect timing',
             route: '/game-intro/stop-it',
-            color: AppColors.accent,
-            textColor: AppColors.white,
-          ),
-          HomeTileItem(
-            title: 'Hold It!',
-            subtitle: "Don't spill",
-            route: '/game-intro/hold-it',
             color: AppColors.tileOrange,
             textColor: AppColors.white,
+            imagePath: 'assets/images/stop_it_clock.png',
           ),
           // HomeTileItem(
           //   title: 'Balance It!',

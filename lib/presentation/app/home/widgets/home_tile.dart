@@ -11,6 +11,7 @@ class HomeTile extends StatelessWidget {
   final String route;
   final Color color;
   final Color textColor;
+  final String imagePath;
 
   const HomeTile({
     super.key,
@@ -19,6 +20,7 @@ class HomeTile extends StatelessWidget {
     required this.route,
     required this.color,
     required this.textColor,
+    required this.imagePath,
   });
 
   @override
@@ -59,8 +61,15 @@ class HomeTile extends StatelessWidget {
                   ],
                 ),
               ),
-              // const SizedBox(height: AppSpacing.sm),
-              // Text(subtitle, style: AppTextStyles.tileSubtitle),
+              // const Spacer(),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  imagePath,
+                  height: 160,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
         ),

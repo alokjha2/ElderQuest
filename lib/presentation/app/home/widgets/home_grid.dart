@@ -9,6 +9,7 @@ class HomeTileItem {
   final String route;
   final Color color;
   final Color textColor;
+  final String imagePath;
 
   const HomeTileItem({
     required this.title,
@@ -16,6 +17,7 @@ class HomeTileItem {
     required this.route,
     required this.color,
     required this.textColor,
+    required this.imagePath,
   });
 }
 
@@ -42,6 +44,7 @@ class HomeGrid extends StatelessWidget {
               route: item.route,
               color: item.color,
               textColor: item.textColor,
+              imagePath: item.imagePath,
             ),
           )
           .toList(),
