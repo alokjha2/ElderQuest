@@ -20,9 +20,10 @@ class EndScoreSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+     
       children: [
         Text(gameTitle, style: AppTextStyles.endScoreModeTitle),
-        const SizedBox(height: AppSpacing.s32),
+        const SizedBox(height: AppSpacing.s16),
         Text('$score', style: AppTextStyles.endScoreValue),
         const SizedBox(height: AppSpacing.s32),
         Text(bestLabel, style: AppTextStyles.endScoreBest),

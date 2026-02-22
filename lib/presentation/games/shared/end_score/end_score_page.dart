@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:math';
 
 import 'package:elder_quest/core/component/game_page_card.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,18 @@ import '../../../../core/theme/app_spacing.dart';
 import 'widgets/end_score_actions.dart';
 import 'widgets/end_score_header.dart';
 import 'widgets/end_score_summary.dart';
+
+
+enum EndScoreScreenColor {
+  red(AppColors.endScoreRed),
+  blue(AppColors.endScoreBlue),
+  green(AppColors.endScoreGreen),
+  purple(AppColors.endScorePurple);
+
+  final Color color;
+  const EndScoreScreenColor(this.color);
+}
+
 
 class EndScorePage extends HookWidget {
   final String gameTitle;
@@ -32,6 +45,10 @@ class EndScorePage extends HookWidget {
   Widget build(BuildContext context) {
     final controller = useMemoized(() => ScreenshotController());
     final isSharing = useState(false);
+    final backgroundColor = useMemoized(() {
+      final colors = EndScoreScreenColor.values;
+      return colors[Random().nextInt(colors.length)].color;
+    });
 
     Future<void> shareScore() async {
       if (isSharing.value) return;
@@ -55,11 +72,12 @@ class EndScorePage extends HookWidget {
       controller: controller,
       child: GamePageCard(
         bodypadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s28, vertical: AppSpacing.s16),
-        backgroundColor: AppColors.endScoreRed,
+        backgroundColor: backgroundColor,
        
           
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               EndScoreSummary(
                 gameTitle: gameTitle,

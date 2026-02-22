@@ -16,6 +16,9 @@ class AppColors {
   static const Color danger = Color(0xFFE53935);
   static const Color holdRed = Color(0xFFE57373);
   static const Color endScoreRed = Color(0xFFF44336);
+  static const Color endScoreBlue = Color(0xFF2196F3);
+  static const Color endScoreGreen = Color(0xFF4CAF50);
+  static const Color endScorePurple = Color(0xFF9C27B0);
   static const Color lightBlueFill = Color(0xFFDCEFFF);
   static const Color hintBlue = Color(0xFF6CA9FF);
 

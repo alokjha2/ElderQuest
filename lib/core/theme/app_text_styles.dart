@@ -49,6 +49,7 @@ class AppTextStyles {
   static const TextStyle endScoreModeTitle = TextStyle(
     color: AppColors.white,
     fontWeight: FontWeight.w700,
+    fontSize: 24
   );
 
   static const TextStyle endScoreValue = TextStyle(
