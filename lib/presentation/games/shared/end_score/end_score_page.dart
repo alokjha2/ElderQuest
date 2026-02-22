@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:elder_quest/core/component/game_page_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -52,39 +53,28 @@ class EndScorePage extends HookWidget {
 
     return Screenshot(
       controller: controller,
-      child: Scaffold(
+      child: GamePageCard(
+        bodypadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s28, vertical: AppSpacing.s16),
         backgroundColor: AppColors.endScoreRed,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.s28,
-              vertical: AppSpacing.s16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                EndScoreHeader(
-                  gameTitle: gameTitle,
-                  score: score,
-                  onBack: () => context.go('/home'),
-                ),
-                const SizedBox(height: AppSpacing.s36),
-                EndScoreSummary(
-                  gameTitle: gameTitle,
-                  score: score,
-                  bestLabel: bestLabel,
-                ),
-                const Spacer(),
-                EndScoreActions(
-                  onShare: shareScore,
-                  onExit: () => context.go('/home'),
-                  onAgain: () => context.go(playRoute),
-                ),
-                const SizedBox(height: AppSpacing.md),
-              ],
-            ),
-          ),
-        ),
+       
+          
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              EndScoreSummary(
+                gameTitle: gameTitle,
+                score: score,
+                bestLabel: bestLabel,
+              ),
+              const Spacer(),
+              EndScoreActions(
+                onShare: shareScore,
+                onExit: () => context.go('/home'),
+                onAgain: () => context.go(playRoute),
+              ),
+              const SizedBox(height: AppSpacing.md),
+            ],
+          ), title: "", onBack: () => context.go('/home'),
       ),
     );
   }

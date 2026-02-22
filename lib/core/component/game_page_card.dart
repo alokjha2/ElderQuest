@@ -9,7 +9,7 @@ class GamePageCard extends HookWidget {
   final String title;
   final VoidCallback onBack;
   final Widget body;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? bodypadding;
   final Color? backgroundColor;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCallback? onTap;
@@ -19,7 +19,7 @@ class GamePageCard extends HookWidget {
     required this.title,
     required this.onBack,
     required this.body,
-    this.padding = const EdgeInsets.fromLTRB(AppSpacing.s24, AppSpacing.s32,AppSpacing.md, AppSpacing.md,),
+    this.bodypadding,
     this.backgroundColor = AppColors.hintBlue,
     this.onTapDown,
     this.onTap,
@@ -40,7 +40,12 @@ class GamePageCard extends HookWidget {
               child: Header(title: title, onBack: onBack),
             ),
             const SizedBox(height: AppSpacing.s24),
-            Expanded(child: body),
+            Expanded(
+              child: Padding(
+                padding: bodypadding ?? EdgeInsets.zero,
+                child: body,
+              ),
+            ),
           ],
         ),
       ),
