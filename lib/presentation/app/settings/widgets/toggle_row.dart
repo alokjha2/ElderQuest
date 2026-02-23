@@ -1,4 +1,5 @@
 import 'package:elder_quest/core/audio/game_audio_player.dart';
+import 'package:elder_quest/core/audio/app_sounds.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -26,7 +27,7 @@ class ToggleRow extends StatelessWidget {
           onTap: () async {
             final sfx = GameAudioPlayer();
             onChanged(!value);
-            await sfx.playSfx('assets/sounds/start.mp3');
+            await sfx.playSfx(AppSounds.toggle);
           },
           child: Container(
             width: AppSpacing.s58,
