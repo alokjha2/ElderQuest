@@ -9,6 +9,7 @@ import '../../../core/theme/app_text_styles.dart';
 import 'balance_it_animator.dart';
 import 'balance_it_utils.dart';
 import 'widgets/balance_it_board.dart';
+import '../shared/end_score/end_score_page.dart';
 
 class BalanceItPage extends HookWidget {
   const BalanceItPage({super.key});
@@ -49,6 +50,18 @@ class BalanceItPage extends HookWidget {
         frozenBallPosition.value = animatedBall;
         isGameEnded.value = true;
         controller.stop();
+        final score = _calculateScore(
+          targetValue,
+          frozenBallPosition.value,
+        );
+        context.go(
+          '/end-score',
+          extra: EndScoreArgs(
+            gameTitle: 'Balance It!',
+            score: score,
+            playRoute: '/balance-it',
+          ),
+        );
       },
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s24),
@@ -78,4 +91,10 @@ class BalanceItPage extends HookWidget {
       ),
     );
   }
+}
+
+int _calculateScore(int target, double position) {
+  final difference = (position - target).abs();
+  final score = (100 - (difference * 3)).round();
+  return score.clamp(0, 100);
 }

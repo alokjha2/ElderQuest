@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ScalePainter extends CustomPainter {
-  static const int maxValue = 30;
+  static const int maxValue = 50;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -20,7 +20,7 @@ class ScalePainter extends CustomPainter {
     final baseY = size.height * 0.35;
 
     for (int i = -maxValue; i <= maxValue; i++) {
-      final x = centerX + (i / maxValue) * size.width * 0.38;
+      final x = centerX + (i / maxValue) * size.width * 0.48;
       final isMajor = i % 10 == 0;
       final isMid = i % 5 == 0;
       final length = isMajor

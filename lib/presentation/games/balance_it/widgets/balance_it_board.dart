@@ -24,14 +24,14 @@ class BalanceItBoard extends StatelessWidget {
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
         final plankWidth = maxWidth * 0.8;
-        final plankHeight = max(18.0, plankWidth * 0.06);
+        final plankHeight = max(24.0, plankWidth * 0.08);
         final baseWidth = plankWidth * 0.22;
         final baseHeight = baseWidth * 0.75;
-        final ballRadius = plankHeight * 0.65;
+        final ballRadius = plankHeight * 0.5;
 
         final normalized =
             (ballPosition / BalanceItAnimator.maxRange).clamp(-1.0, 1.0);
-        final maxTravel = plankWidth * 0.4;
+        final maxTravel = (plankWidth / 2) - (ballRadius * 0.95);
         final ballX = normalized * maxTravel;
 
         return SizedBox(
@@ -67,7 +67,7 @@ class BalanceItBoard extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          bottom: plankHeight * 0.25,
+                          // bottom: plankHeight * 0.02,
                           left: (plankWidth / 2) + ballX - ballRadius,
                           child: BallWidget(radius: ballRadius),
                         ),
