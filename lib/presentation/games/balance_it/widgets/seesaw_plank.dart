@@ -28,24 +28,6 @@ class SeesawPlank extends StatelessWidget {
                 Color(0xFFB9793F),
               ],
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: height * 0.18,
-          child: Container(
-            width: width * 0.9,
-            height: height * 0.2,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(height * 0.2),
-            ),
           ),
         ),
       ],
@@ -57,13 +39,13 @@ class _PlankShadowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final shadowPaint = Paint()
-      ..color = Colors.black.withOpacity(0.18)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+      ..color = Colors.black.withOpacity(0.14)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
 
     final rect = Rect.fromCenter(
-      center: Offset(size.width / 2, size.height / 2 + 6),
-      width: size.width * 0.95,
-      height: size.height * 0.8,
+      center: Offset(size.width / 2, size.height / 2 + 8),
+      width: size.width * 0.98,
+      height: size.height * 0.9,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, Radius.circular(size.height * 0.4)),

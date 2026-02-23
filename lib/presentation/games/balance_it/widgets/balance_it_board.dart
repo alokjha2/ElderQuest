@@ -28,6 +28,8 @@ class BalanceItBoard extends StatelessWidget {
         final baseWidth = plankWidth * 0.22;
         final baseHeight = baseWidth * 0.75;
         final ballRadius = plankHeight * 0.5;
+        final labelHeight = plankHeight * 0.8;
+        final scaleHeight = labelHeight + plankHeight * 0.4;
 
         final normalized =
             (ballPosition / BalanceItAnimator.maxRange).clamp(-1.0, 1.0);
@@ -36,7 +38,7 @@ class BalanceItBoard extends StatelessWidget {
 
         return SizedBox(
           width: plankWidth,
-          height: baseHeight + plankHeight + ballRadius * 2.2,
+          height: baseHeight + labelHeight + plankHeight + ballRadius * 2.2,
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -51,23 +53,46 @@ class BalanceItBoard extends StatelessWidget {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: plankWidth,
-                    height: plankHeight + ballRadius * 2,
+                    height: labelHeight + plankHeight + ballRadius * 2,
                     child: Stack(
-                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
                       children: [
-                        SeesawPlank(
-                          width: plankWidth,
-                          height: plankHeight,
-                        ),
                         Positioned(
-                          top: 2,
-                          child: CustomPaint(
-                            size: Size(plankWidth, plankHeight),
-                            painter: ScalePainter(),
+                          top: 0,
+                          child: SizedBox(
+                            width: plankWidth,
+                            height: scaleHeight,
+                            child: RepaintBoundary(
+                              child: CustomPaint(
+                                size: Size(plankWidth, scaleHeight),
+                                painter: ScalePainter(
+                                  plankHeight: plankHeight,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         Positioned(
-                          // bottom: plankHeight * 0.02,
+                          top: 0,
+                          child: SizedBox(
+                            width: plankWidth,
+                            height: scaleHeight,
+                            child: RepaintBoundary(
+                              child: ScaleLabels(plankHeight: plankHeight),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: labelHeight,
+                          child: RepaintBoundary(
+                            child: SeesawPlank(
+                              width: plankWidth,
+                              height: plankHeight,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: labelHeight - (ballRadius * 0.15),
                           left: (plankWidth / 2) + ballX - ballRadius,
                           child: BallWidget(radius: ballRadius),
                         ),
