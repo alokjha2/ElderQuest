@@ -48,7 +48,7 @@ class HomeBody extends HookWidget {
             title: 'Stop It!',
             subtitle: 'Perfect timing',
             route: '/game-intro/stop-it',
-            color: AppColors.black87,
+            color: AppColors.settingsThumbDark,
             textColor: AppColors.white,
             imagePath: 'assets/images/stop_it_clock.png',
           ),
