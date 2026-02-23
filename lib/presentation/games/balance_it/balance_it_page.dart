@@ -3,6 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/audio/audio_service.dart';
+import '../../../core/audio/audio_levels.dart';
+import '../../../core/audio/app_sounds.dart';
+import '../../../core/audio/game_audio_player.dart';
 import '../../../core/component/game_page_card.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -27,15 +30,23 @@ class BalanceItPage extends HookWidget {
     final isGameEnded = useState(false);
     final frozenBallPosition = useState(0.0);
     final targetValue = useMemoized(randomTargetValue);
+    final ballSfx = useMemoized(GameAudioPlayer.new);
 
     useEffect(() {
       AudioService.instance
           .setBackgroundVolume(AudioService.gameplayBackgroundVolume);
       controller.repeat(reverse: true);
+      ballSfx.playSfx(
+        AppSounds.balanceIt,
+        volume: AudioLevels.balanceSfxVolume,
+        loop: true,
+      );
       return () {
         controller.stop();
+        ballSfx.stopSfx();
+        ballSfx.dispose();
       };
-    }, [controller]);
+    }, [controller, ballSfx]);
 
     final ballPosition =
         isGameEnded.value ? frozenBallPosition.value : animatedBall;
@@ -50,6 +61,7 @@ class BalanceItPage extends HookWidget {
         frozenBallPosition.value = animatedBall;
         isGameEnded.value = true;
         controller.stop();
+        ballSfx.stopSfx();
         final score = _calculateScore(
           targetValue,
           frozenBallPosition.value,
