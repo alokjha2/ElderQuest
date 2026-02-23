@@ -47,7 +47,7 @@ class BalanceItBoard extends StatelessWidget {
                 height: baseHeight,
               ),
               Positioned(
-                bottom: baseHeight - plankHeight * 0.35,
+                bottom: baseHeight - (plankHeight * 0.8),
                 child: Transform.rotate(
                   angle: tiltRadians,
                   alignment: Alignment.center,
