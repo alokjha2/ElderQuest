@@ -14,9 +14,9 @@ ElderQuest is a collection of mini games built in Flutter. The codebase focuses 
 ElderQuest ships multiple mini games such as Tap Me, Stop It, and Hold It. Each game has its own domain and application logic, while shared UI and theme utilities live under `core` and `presentation`.
 
 ## Installation
-1. Install Flutter SDK (3.10+).
-2. Run `flutter pub get`.
-3. Run `flutter run`.
+1. Install Flutter Version Manager.
+2. Run `fvm flutter pub get`.
+3. Run `fvm flutter run`.
 
 ## Folder Structure
 ```
@@ -44,6 +44,7 @@ lib
 |           `-- tapme_state.dart
 |-- core
 |   |-- audio
+|   |   |-- app_sounds.dart
 |   |   |-- audio_levels.dart
 |   |   |-- audio_permissions.dart
 |   |   |-- audio_service.dart
@@ -52,6 +53,8 @@ lib
 |   |   |-- app_back_button.dart
 |   |   |-- game_page_card.dart
 |   |   `-- header.dart
+|   |-- enums
+|   |   `-- end_score_screen_color.dart
 |   |-- localization
 |   |   |-- l10n.dart
 |   |   `-- arb
@@ -70,24 +73,24 @@ lib
 |       |-- components
 |       `-- widgets
 |-- domain
-|   |-- game_engine
-|   |   |-- game_result.dart
-|   |   `-- score.dart
-|   `-- games
-|       |-- balance_it
-|       |-- hold_it
-|       |   |-- hold_it_game.dart
-|       |   |-- hold_it_scoring.dart
-|       |   |-- hold_it_status.dart
-|       |   `-- score.dart
-|       |-- stop_it
-|       |   |-- score.dart
-|       |   |-- stop_it_game.dart
-|       |   |-- stop_it_scoring.dart
-|       |   `-- stop_it_status.dart
-|       `-- tapme
-|           |-- tapme_game.dart
-|           `-- tapme_status.dart
+|   |-- games
+|   |   |-- balance_it
+|   |   |-- hold_it
+|   |   |   |-- hold_it_game.dart
+|   |   |   |-- hold_it_scoring.dart
+|   |   |   |-- hold_it_status.dart
+|   |   |   `-- score.dart
+|   |   |-- stop_it
+|   |   |   |-- score.dart
+|   |   |   |-- stop_it_game.dart
+|   |   |   |-- stop_it_scoring.dart
+|   |   |   `-- stop_it_status.dart
+|   |   `-- tapme
+|   |       |-- tapme_game.dart
+|   |       `-- tapme_status.dart
+|   `-- game_engine
+|       |-- game_result.dart
+|       `-- score.dart
 `-- presentation
     |-- app
     |   |-- elder_quest_app.dart
@@ -97,6 +100,7 @@ lib
     |   |       |-- home_body.dart
     |   |       |-- home_grid.dart
     |   |       `-- home_tile.dart
+    |   |-- intro
     |   |-- loading
     |   |   `-- loading_page.dart
     |   |-- routing
@@ -110,13 +114,23 @@ lib
     |           |-- settings_body.dart
     |           |-- slider_row.dart
     |           `-- toggle_row.dart
+    |   `-- splash
     `-- games
         |-- balance_it
-        |   `-- balance_it_page.dart
+        |   |-- balance_it_animator.dart
+        |   |-- balance_it_page.dart
+        |   |-- balance_it_utils.dart
+        |   `-- widgets
+        |       |-- balance_it_board.dart
+        |       |-- ball_widget.dart
+        |       |-- scale_painter.dart
+        |       |-- seesaw_base.dart
+        |       `-- seesaw_plank.dart
         |-- hold_it
         |   |-- hold_it_page.dart
         |   `-- widgets
         |       |-- jar_fill.dart
+        |       |-- jar_fill_markings_painter.dart
         |       |-- progress_indicator.dart
         |       `-- score_text.dart
         |-- shared
@@ -124,6 +138,7 @@ lib
         |   |   |-- end_score_page.dart
         |   |   `-- widgets
         |   |       |-- end_score_actions.dart
+        |   |       |-- end_score_action_text.dart
         |   |       |-- end_score_header.dart
         |   |       `-- end_score_summary.dart
         |   `-- game_intro
@@ -145,15 +160,49 @@ lib
             |-- tapme_page.dart
             `-- widgets
                 |-- score_text.dart
+                |-- tapme_view_body.dart
+                |-- tap_burst.dart
                 `-- tap_button.dart
 ```
 
 ```
 assets
+|-- fonts
+|   |-- Idiqlat-2.000
+|   `-- Idiqlat-2.000.zip
+|-- icons
+|   |-- bg.svg
+|   `-- clock.svg
 |-- images
+|   |-- balance_it.png
+|   |-- beaker_hold_it.png
+|   |-- licenses.txt
+|   |-- logo.png
+|   |-- stop_it_clock.png
+|   |-- tap_it_click.png
+|   `-- game_screenshots
+|       |-- hold_it.jpg
+|       |-- stop_it.jpg
+|       `-- tap_me.jpg
 |-- json
-|-- sounds
-`-- fonts
+|   |-- data
+|   |-- data.json
+|   `-- level_config.json
+`-- sounds
+    |-- 90s-game-ui-6-185099.mp3
+    |-- 90s-game-ui-7-185100.mp3
+    |-- balance_it.mp3
+    |-- bg.mp3
+    |-- bg2.mp3
+    |-- flip.mp3
+    |-- flipcard.mp3
+    |-- game-start-6104.mp3
+    |-- out.mp3
+    |-- robot-compute-beeps-1-171532.mp3
+    |-- start.mp3
+    |-- tapping.mp3
+    |-- tick_tick.mp3
+    `-- water_filling.mp3
 ```
 
 ## Dependencies
@@ -171,7 +220,7 @@ assets
 ## Contributing
 1. Create a feature branch.
 2. Keep changes focused and small.
-3. Ensure the app builds with `flutter run`.
+3. Ensure the app builds with `fvm flutter run`.
 
 ## License
 This project is licensed under the MIT License. See `LICENSE` for details.
