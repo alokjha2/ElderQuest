@@ -12,6 +12,7 @@ class AppColors {
   static const Color white70 = Color(0xB3FFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color black87 = Color(0xDD000000);
+  static const Color grey = Color.fromARGB(255, 65, 61, 61);
 
   static const Color danger = Color(0xFFE53935);
   static const Color holdRed = Color(0xFFE57373);

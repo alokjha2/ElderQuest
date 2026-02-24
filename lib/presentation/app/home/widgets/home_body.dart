@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../core/audio/audio_service.dart';
+import '../../../../core/audio/app_sounds.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'home_grid.dart';
@@ -14,7 +15,7 @@ class HomeBody extends HookWidget {
     useEffect(() {
       Future<void>(() async {
         await AudioService.instance.playBackgroundMusic(
-          'assets/sounds/bg2.mp3',
+          AppSounds.background,
           volume: 0.1,
         );
       });
@@ -47,17 +48,18 @@ class HomeBody extends HookWidget {
             title: 'Stop It!',
             subtitle: 'Perfect timing',
             route: '/game-intro/stop-it',
-            color: AppColors.tileOrange,
+            color: AppColors.settingsThumbDark,
             textColor: AppColors.white,
             imagePath: 'assets/images/stop_it_clock.png',
           ),
-          // HomeTileItem(
-          //   title: 'Balance It!',
-          //   subtitle: 'Stay steady',
-          //   route: '/game-intro/balance-it',
-          //   color: AppColors.tilePurple,
-          //   textColor: AppColors.white,
-          // ),
+          HomeTileItem(
+            title: 'Balance It!',
+            subtitle: 'Stay steady',
+            route: '/game-intro/balance-it',
+            color: AppColors.tileOrange,
+            textColor: AppColors.white,
+            imagePath: 'assets/images/balance_it.png',
+          ),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/audio/audio_levels.dart';
 import '../../../core/audio/game_audio_player.dart';
+import '../../../core/audio/app_sounds.dart';
 import '../../../application/games/hold_it/hold_it_bloc.dart';
 import '../../../application/games/hold_it/hold_it_event.dart';
 import '../../../application/games/hold_it/hold_it_state.dart';
@@ -55,7 +56,7 @@ class HoldItPage extends HookWidget {
             behavior: HitTestBehavior.opaque,
             onTapDown: (_) {
               waterSfx.playSfx(
-                'assets/sounds/water_filling.mp3',
+                AppSounds.waterFilling,
                 volume: AudioLevels.waterSfxVolume,
                 loop: true,
               );

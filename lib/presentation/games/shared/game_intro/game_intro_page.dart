@@ -58,14 +58,15 @@ class GameIntroPage extends HookWidget {
           accent: AppColors.tileOrange,
           topBar: Color(0xFF3B2E54),
         );
-      // case 'balance-it':
-      //   return const GameIntroPage(
-      //     title: 'BALANCE IT!',
-      //     description: 'Keep it steady as long as you can.',
-      //     playRoute: '/balance-it',
-      //     accent: AppColors.tilePurple,
-      //     topBar: Color(0xFF3B2E54),
-      //   );
+      case 'balance-it':
+        return const GameIntroPage(
+          title: 'BALANCE IT!',
+           description: 'Balance the ball and hit the target.\n\n'
+'It takes tightrope-level focus to score 100. Do you have it?',
+          playRoute: '/balance-it',
+          accent: AppColors.tilePurple,
+          topBar: Color(0xFF3B2E54),
+        );
       default:
         return const GameIntroPage(
           title: 'GAME',
