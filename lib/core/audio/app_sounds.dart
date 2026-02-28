@@ -1,4 +1,5 @@
 ﻿class AppSounds {
+  const AppSounds._();
   static const String tap = 'assets/sounds/tapping.mp3';
   static const String tick = 'assets/sounds/tick_tick.mp3';
   static const String waterFilling = 'assets/sounds/water_filling.mp3';
