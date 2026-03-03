@@ -1,3 +1,4 @@
+import 'package:elder_quest/presentation/games/balance_it/balance_it_score.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -62,7 +63,7 @@ class BalanceItPage extends HookWidget {
         isGameEnded.value = true;
         controller.stop();
         ballSfx.stopSfx();
-        final score = _calculateScore(
+        final score = calculateScore(
           targetValue,
           frozenBallPosition.value,
         );
@@ -105,8 +106,3 @@ class BalanceItPage extends HookWidget {
   }
 }
 
-int _calculateScore(int target, double position) {
-  final difference = (position - target).abs();
-  final score = (100 - (difference * 3)).round();
-  return score.clamp(0, 100);
-}
